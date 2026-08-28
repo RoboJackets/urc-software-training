@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="tower_leg" params="parent name offset_x offset_y leg_height">
+    <joint name="${name}_joint" type="fixed">
+      <parent link="${parent}"/>
+      <child link="${name}_link"/>
+      <origin xyz="${offset_x} ${offset_y} ${-leg_height / 2.0}" rpy="0 0 0"/>
+    </joint>
+
+    <link name="${name}_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.012 0.012 ${leg_height}"/>
+        </geometry>
+        <material name="caster_gray"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.012 0.012 ${leg_height}"/>
+        </geometry>
+      </collision>
+    </link>
+  </xacro:macro>
+
+  <xacro:macro name="lidar_tower" params="parent x y z plate_size leg_height plate_thickness">
+    <joint name="sensor_tower_mount_joint" type="fixed">
+      <parent link="${parent}"/>
+      <child link="sensor_tower_top_link"/>
+      <origin xyz="${x} ${y} ${z}" rpy="0 0 0"/>
+    </joint>
+
+    <link name="sensor_tower_top_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="${plate_size} ${plate_size} ${plate_thickness}"/>
+        </geometry>
+        <material name="base_blue"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="${plate_size} ${plate_size} ${plate_thickness}"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <xacro:tower_leg
+      parent="sensor_tower_top_link" name="sensor_tower_front_left_leg"
+      offset_x="${plate_size / 2.0 - 0.008}" offset_y="${plate_size / 2.0 - 0.008}"
+      leg_height="${leg_height}"/>
+    <xacro:tower_leg
+      parent="sensor_tower_top_link" name="sensor_tower_front_right_leg"
+      offset_x="${plate_size / 2.0 - 0.008}" offset_y="${-plate_size / 2.0 + 0.008}"
+      leg_height="${leg_height}"/>
+    <xacro:tower_leg
+      parent="sensor_tower_top_link" name="sensor_tower_back_left_leg"
+      offset_x="${-plate_size / 2.0 + 0.008}" offset_y="${plate_size / 2.0 - 0.008}"
+      leg_height="${leg_height}"/>
+    <xacro:tower_leg
+      parent="sensor_tower_top_link" name="sensor_tower_back_right_leg"
+      offset_x="${-plate_size / 2.0 + 0.008}" offset_y="${-plate_size / 2.0 + 0.008}"
+      leg_height="${leg_height}"/>
+  </xacro:macro>
+</robot>

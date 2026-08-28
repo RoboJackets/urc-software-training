@@ -1,0 +1,214 @@
+<?xml version="1.0"?>
+<robot name="robonav_training_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="use_ros2_control" default="true"/>
+  <xacro:arg name="use_gazebo" default="true"/>
+  <xacro:arg name="ros2_control_config" default="$(find robonav_training_description)/config/ros2_control.yaml"/>
+
+  <xacro:include filename="$(find robonav_training_description)/urdf/sensors/lidar.xacro"/>
+  <xacro:include filename="$(find robonav_training_description)/urdf/sensors/lidar_tower.xacro"/>
+  <xacro:include filename="$(find robonav_training_description)/urdf/sensors/imu.xacro"/>
+
+  <xacro:property name="base_length" value="0.42"/>
+  <xacro:property name="base_width" value="0.30"/>
+  <xacro:property name="base_height" value="0.12"/>
+  <xacro:property name="base_mass" value="8.0"/>
+  <xacro:property name="base_z" value="0.12"/>
+
+  <xacro:property name="wheel_radius" value="0.075"/>
+  <xacro:property name="wheel_width" value="0.04"/>
+  <xacro:property name="wheel_mass" value="0.6"/>
+  <xacro:property name="wheel_separation" value="0.34"/>
+  <xacro:property name="wheel_x_offset" value="-0.07"/>
+
+  <xacro:property name="caster_radius" value="0.035"/>
+  <xacro:property name="caster_mass" value="0.2"/>
+  <xacro:property name="caster_x_offset" value="0.22"/>
+
+  <xacro:property name="sensor_tower_x_offset" value="0.00"/>
+  <xacro:property name="sensor_tower_y_offset" value="0.00"/>
+  <xacro:property name="sensor_tower_plate_size" value="0.11"/>
+  <xacro:property name="sensor_tower_leg_height" value="0.10"/>
+  <xacro:property name="sensor_tower_plate_thickness" value="0.012"/>
+  <xacro:property name="sensor_tower_z_offset" value="${base_height / 2.0 + sensor_tower_leg_height + sensor_tower_plate_thickness / 2.0}"/>
+  <xacro:property name="lidar_mount_z_offset" value="${sensor_tower_plate_thickness / 2.0 + 0.0115}"/>
+  <xacro:property name="imu_mount_z_offset" value="${base_height / 2.0 + 0.002}"/>
+  <xacro:property name="imu_x_offset" value="0.0"/>
+
+  <material name="base_blue">
+    <color rgba="0.10 0.22 0.34 1.0"/>
+  </material>
+  <material name="wheel_black">
+    <color rgba="0.02 0.02 0.02 1.0"/>
+  </material>
+  <material name="caster_gray">
+    <color rgba="0.45 0.48 0.50 1.0"/>
+  </material>
+
+  <xacro:macro name="box_inertial" params="mass x y z">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="${mass}"/>
+      <inertia
+        ixx="${mass * (y * y + z * z) / 12.0}" ixy="0.0" ixz="0.0"
+        iyy="${mass * (x * x + z * z) / 12.0}" iyz="0.0"
+        izz="${mass * (x * x + y * y) / 12.0}"/>
+    </inertial>
+  </xacro:macro>
+
+  <xacro:macro name="wheel_inertial" params="mass radius width">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="${mass}"/>
+      <inertia
+        ixx="${mass * (3.0 * radius * radius + width * width) / 12.0}" ixy="0.0" ixz="0.0"
+        iyy="${mass * radius * radius / 2.0}" iyz="0.0"
+        izz="${mass * (3.0 * radius * radius + width * width) / 12.0}"/>
+    </inertial>
+  </xacro:macro>
+
+  <xacro:macro name="sphere_inertial" params="mass radius">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="${mass}"/>
+      <inertia
+        ixx="${0.4 * mass * radius * radius}" ixy="0.0" ixz="0.0"
+        iyy="${0.4 * mass * radius * radius}" iyz="0.0"
+        izz="${0.4 * mass * radius * radius}"/>
+    </inertial>
+  </xacro:macro>
+
+  <link name="base_footprint"/>
+
+  <joint name="base_footprint_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 ${base_z}" rpy="0 0 0"/>
+  </joint>
+
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${base_length} ${base_width} ${base_height}"/>
+      </geometry>
+      <material name="base_blue"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${base_length} ${base_width} ${base_height}"/>
+      </geometry>
+    </collision>
+    <xacro:box_inertial mass="${base_mass}" x="${base_length}" y="${base_width}" z="${base_height}"/>
+  </link>
+
+  <xacro:macro name="drive_wheel" params="side y">
+    <joint name="${side}_wheel_joint" type="continuous">
+      <parent link="base_link"/>
+      <child link="${side}_wheel_link"/>
+      <origin xyz="${wheel_x_offset} ${y} ${wheel_radius - base_z}" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
+      <dynamics damping="0.02" friction="0.02"/>
+    </joint>
+
+    <link name="${side}_wheel_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="${pi / 2.0} 0 0"/>
+        <geometry>
+          <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+        </geometry>
+        <material name="wheel_black"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="${pi / 2.0} 0 0"/>
+        <geometry>
+          <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+        </geometry>
+      </collision>
+      <xacro:wheel_inertial mass="${wheel_mass}" radius="${wheel_radius}" width="${wheel_width}"/>
+    </link>
+  </xacro:macro>
+
+  <xacro:drive_wheel side="left" y="${wheel_separation / 2.0}"/>
+  <xacro:drive_wheel side="right" y="${-wheel_separation / 2.0}"/>
+
+  <xacro:lidar_tower
+    parent="base_link" x="${sensor_tower_x_offset}" y="${sensor_tower_y_offset}"
+    z="${sensor_tower_z_offset}" plate_size="${sensor_tower_plate_size}"
+    leg_height="${sensor_tower_leg_height}" plate_thickness="${sensor_tower_plate_thickness}"/>
+  <xacro:lidar_sensor parent="sensor_tower_top_link" x="0.0" y="0.0" z="${lidar_mount_z_offset}"/>
+  <xacro:imu_sensor parent="base_link" x="${imu_x_offset}" y="0.0" z="${imu_mount_z_offset}"/>
+
+  <joint name="caster_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="caster_link"/>
+    <origin xyz="${caster_x_offset} 0 ${caster_radius - base_z}" rpy="0 0 0"/>
+  </joint>
+
+  <link name="caster_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="${caster_radius}"/>
+      </geometry>
+      <material name="caster_gray"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="${caster_radius}"/>
+      </geometry>
+    </collision>
+    <xacro:sphere_inertial mass="${caster_mass}" radius="${caster_radius}"/>
+  </link>
+
+  <gazebo reference="base_link">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+  <gazebo reference="left_wheel_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <gazebo reference="right_wheel_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <gazebo reference="caster_link">
+    <material>Gazebo/Grey</material>
+    <mu1>0.01</mu1>
+    <mu2>0.01</mu2>
+  </gazebo>
+
+  <xacro:if value="$(arg use_ros2_control)">
+    <ros2_control name="GazeboSimSystem" type="system">
+      <hardware>
+        <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+      </hardware>
+      <joint name="left_wheel_joint">
+        <command_interface name="velocity">
+          <param name="min">-10.0</param>
+          <param name="max">10.0</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+      <joint name="right_wheel_joint">
+        <command_interface name="velocity">
+          <param name="min">-10.0</param>
+          <param name="max">10.0</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+    </ros2_control>
+  </xacro:if>
+
+  <xacro:if value="$(arg use_gazebo)">
+    <gazebo>
+      <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+        <ros>
+          <remapping>/diff_drive_controller/cmd_vel_unstamped:=/cmd_vel</remapping>
+        </ros>
+        <parameters>$(arg ros2_control_config)</parameters>
+      </plugin>
+    </gazebo>
+  </xacro:if>
+</robot>

@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <material name="imu_green">
+    <color rgba="0.10 0.85 0.35 1.0"/>
+  </material>
+
+  <xacro:macro name="imu_sensor" params="parent x y z">
+    <joint name="imu_joint" type="fixed">
+      <parent link="${parent}"/>
+      <child link="imu_link"/>
+      <origin xyz="${x} ${y} ${z}" rpy="0 0 0"/>
+    </joint>
+
+    <link name="imu_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.032 0.032 0.016"/>
+        </geometry>
+        <material name="imu_green"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.032 0.032 0.016"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <gazebo reference="imu_link">
+      <sensor name="imu_sensor" type="imu">
+        <always_on>true</always_on>
+        <update_rate>100</update_rate>
+        <topic>imu/data</topic>
+        <gz_frame_id>imu_link</gz_frame_id>
+        <!-- A small Gaussian noise model. Besides being realistic, it makes the
+             simulated IMU publish non-zero covariance fields on sensor_msgs/Imu,
+             which robot_localization's EKF reads to weight the measurement. -->
+        <imu>
+          <angular_velocity>
+            <x><noise type="gaussian"><mean>0.0</mean><stddev>0.0017</stddev></noise></x>
+            <y><noise type="gaussian"><mean>0.0</mean><stddev>0.0017</stddev></noise></y>
+            <z><noise type="gaussian"><mean>0.0</mean><stddev>0.0017</stddev></noise></z>
+          </angular_velocity>
+          <linear_acceleration>
+            <x><noise type="gaussian"><mean>0.0</mean><stddev>0.017</stddev></noise></x>
+            <y><noise type="gaussian"><mean>0.0</mean><stddev>0.017</stddev></noise></y>
+            <z><noise type="gaussian"><mean>0.0</mean><stddev>0.017</stddev></noise></z>
+          </linear_acceleration>
+        </imu>
+      </sensor>
+    </gazebo>
+  </xacro:macro>
+</robot>

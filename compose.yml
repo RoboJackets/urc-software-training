@@ -1,0 +1,25 @@
+services:
+  ros2-humble-vnc:
+    # Humble's Gazebo packages are currently published for amd64, but not arm64.
+    # Apple Silicon therefore runs this image through Docker's amd64 emulation.
+    platform: linux/amd64
+    build:
+      context: ./docker/ros2-humble-vnc
+      dockerfile: Dockerfile
+    image: urc-ros2-humble-vnc:latest
+    container_name: urc-ros2-humble-vnc
+    environment:
+      VNC_PASSWORD: ${VNC_PASSWORD:-ros}
+      VNC_GEOMETRY: ${VNC_GEOMETRY:-1280x800}
+      VNC_DEPTH: ${VNC_DEPTH:-24}
+      ROS_DOMAIN_ID: ${ROS_DOMAIN_ID:-0}
+      RMW_IMPLEMENTATION: ${RMW_IMPLEMENTATION:-rmw_fastrtps_cpp}
+      QT_X11_NO_MITSHM: 1
+      LIBGL_ALWAYS_SOFTWARE: 1
+    ports:
+      - "${VNC_HOST_PORT:-5901}:5901"
+    volumes:
+      - .:/workspace
+    shm_size: "1gb"
+    stdin_open: true
+    tty: true
