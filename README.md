@@ -5,6 +5,9 @@ This repository is the **student starter** for a 13-lesson course plus one short
 C++ node practice, covering ROS basics, coordinate frames, robot description,
 localization, planning, control, and full-stack integration.
 
+**Estimated length: 7–8 weeks** when reading lessons and completing the coding
+projects together. Project 0 is the short practice immediately after Lesson 1.
+
 This course is meant to get you familiar with ROS 2 and comfortable working with
 it. Like any skill, becoming genuinely good at ROS takes repetition. Personal
 projects, research, and simply experimenting with this training repo—changing a

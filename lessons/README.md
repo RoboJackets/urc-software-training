@@ -4,6 +4,9 @@ A hands-on course that teaches autonomous mobile-robot navigation by walking
 through a **real, working ROS 2 Humble codebase**. Every concept is tied to code
 you can read, build, and run in this repository.
 
+**Estimated length: 7–8 weeks** when reading lessons and completing the coding
+projects together. Project 0 is the short C++ practice after Lesson 1.
+
 By the end you will understand — and have run — a full navigation stack: a robot
 that knows where it is (**localization**), decides how to get somewhere
 (**planning**), and drives there (**control**), all in simulation. Those three
