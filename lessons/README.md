@@ -13,25 +13,21 @@ words are the spine of the whole course:
 - **Planning** — choosing a route to a goal.
 - **Control** — generating the motor commands to follow that route.
 
-By the end of the coding track, you should be able to create a composable C++
-node, connect publishers and subscribers, declare parameters, wire CMake and
-launch files, use TF, keep algorithm code separate from ROS plumbing, and debug a
+By the end of the coding track, you should have working proficiency with ROS 2 for
+a small navigation system: creating packages and composable C++ nodes, connecting
+publishers and subscribers, declaring parameters, wiring CMake and launch files,
+using TF and QoS, separating algorithms from ROS plumbing, and debugging a
 multi-node graph. Services, actions, custom messages, and production Nav2 are
-introduced only at recognition level; they are sensible follow-on topics rather
-than hidden prerequisites.
+follow-on topics, not hidden prerequisites.
 
 ## How to use this course
 
-You should be comfortable with basic programming—variables, functions, loops,
-conditionals, and simple classes—but you do not need prior ROS experience. The
-[first C++ node practice](first-cpp-node.md) translates the C++ syntax ROS uses
-most often before the larger assignments begin.
-
-Before or during the course, brush up on modern C++. In particular, be able to
-recognize references, `const`, templates, and smart pointers such as
-`std::unique_ptr` and `std::shared_ptr`. You do not need to memorize ROS's long
-types; the practice and [C++ reference](reference/cpp-node-patterns.md) show the
-patterns used here.
+No ROS experience is required, but basic C++ is assumed. You should recognize
+headers and source files, classes, functions, loops, references, `const`,
+templates, and smart pointers such as `std::unique_ptr` and `std::shared_ptr`.
+If those are unfamiliar, search YouTube for **"C++ basics for beginners"** and
+**"modern C++ smart pointers"** and complete a beginner overview first. Project 0
+then introduces the ROS-specific C++ patterns used throughout this repo.
 
 1. Do the lessons **in order** — each builds on the last.
 2. Keep the repo open beside you. Every lesson has a **"Where this lives in the
@@ -48,16 +44,20 @@ If this is your first time in the repository, use this sequence:
    and drive the simulated robot.
 3. Complete the short [first C++ node practice](first-cpp-node.md). It removes the
    ROS/C++ syntax shock before the robotics-heavy implementations.
-4. Continue through Lessons 2–11, running each local checkpoint when its
-   dependencies are available.
-5. Use Lesson 12 to launch and debug the complete system, then return to any
-   earlier full-stack experiments you skipped.
+4. Continue through Lessons 2–11. For a coding lesson, read the concept page,
+   complete its implementation page, and pass its checkpoint before moving on.
+5. Use Lesson 12 to replace the individual project launches with one integrated
+   navigation launch, then debug the complete system.
+
+Reading alone is not course completion. Build every assigned project, run every
+checkpoint, and diagnose at least one deliberately introduced failure. That is
+what turns familiarity into working proficiency.
 
 When you are building or editing code, keep the
-[RoboNav ROS 2 Reference](reference/README.md) open. It has the syntax patterns
-for C++ nodes, `.hpp`/`.cpp` files, publishers, subscribers, QoS, messages,
-launch files, CMake, `package.xml`, parameters, TF, and terminal debugging
-commands used throughout this repo.
+[RoboNav ROS 2 Reference](reference/README.md) open and choose the sheet with the
+same project number. Each project sheet collects the partial scaffolds, selected
+code lines, and checks needed for that assignment. Use the shared terminal page
+only when you need a build or inspection command.
 
 Use the reference as a toolbox, not as an answer to copy from top to bottom. Take
 only the pattern that fits the feature you are implementing, then deliberately
@@ -91,9 +91,9 @@ top-level `README.md`:
 > lesson listed in its row. This page is a map, not the territory — skim it, then
 > start at Lesson 0.
 
-| Package | Produces | Lesson |
+| Package | Produces | Introduced in |
 | --- | --- | --- |
-| `ros_cpp_practice` | `/practice/output` from a tiny composable node | Practice |
+| `ros_cpp_practice` | `/practice/output` from a tiny node | Project 0 |
 | `robonav_training_description` | The robot itself (URDF), sensors, controllers | 3, 6 |
 | `robonav_training_common` | Shared math helpers (angles, grid math) | 2, 8 |
 | `robonav_training_bringup` | Launches sim + the whole stack | 1, 12 |
@@ -106,22 +106,22 @@ top-level `README.md`:
 
 ## Lessons
 
-| # | Lesson | What you learn | Maps to |
+| Order | Lesson | What you learn | Maps to |
 | --- | --- | --- | --- |
-| 0 | [ROS 2 Foundations](lesson-00-ros-foundations.md) | Nodes, topics, messages, services, params, components, colcon | whole repo |
-| 1 | [Terminal & Docker](lesson-01-terminal-and-docker.md) | Shell basics, what Docker is, how this container works, VNC | `docker/`, `start.*` |
-| Practice | [First ROS 2 C++ Node](first-cpp-node.md) | C++ survival syntax; a small composable publisher/subscriber node | `ros_cpp_practice` |
-| 2 | [Coordinate Transforms & TF2](lesson-02-coordinate-transforms-and-tf.md) | Frames, rotations, quaternions, the TF tree, angle wrapping | `robonav_training_common` |
-| 3 | [URDF & the Robot Description](lesson-03-urdf-robot-description.md) | xacro, links, joints, sensors, ros2_control | `robonav_training_description` |
-| 4 | [Differential-Drive Kinematics](lesson-04-diff-drive-kinematics.md) | How two wheels turn into motion; the forward-kinematics math | (theory for 5) |
-| 5 | [Wheel Odometry](lesson-05-wheel-odometry.md) | Dead reckoning, integrating pose, why it drifts; implement the package from scratch | `wheel_odometry` |
-| 6 | [Sensors: IMU & Lidar](lesson-06-sensors-imu-lidar.md) | What an IMU and a lidar measure, noise, the Gazebo bridge | `robonav_training_description`, bringup |
-| 7 | [EKF & Sensor Fusion](lesson-07-ekf-sensor-fusion.md) | Bayesian filtering, the EKF, fusing wheels + IMU; implement the config package from scratch | `ekf_localization` |
-| 8 | [Occupancy Grids & the Map Server](lesson-08-occupancy-grids-map-server.md) | Maps as grids, PGM/YAML format, world↔grid math | `map_server`, `robonav_training_common` |
-| 9 | [Particle Filter (MCL)](lesson-09-particle-filter-mcl.md) | Monte Carlo Localization, likelihood fields, resampling; implement the noisy motion update | `particle_filter` |
-| 10 | [A* Path Planning](lesson-10-a-star-planning.md) | Graph search, heuristics, obstacle inflation; implement A* search | `a_star_planner` |
-| 11 | [Pure Pursuit Path Following](lesson-11-pure-pursuit.md) | Lookahead control, curvature, turning a path into `/cmd_vel`; implement the controller core | `pure_pursuit` |
-| 12 | [Putting It All Together](lesson-12-bringup-full-stack.md) | The full launch graph, data flow, debugging the stack | `robonav_training_bringup` |
+| Lesson 0 | [ROS 2 Foundations](lesson-00-ros-foundations.md) | Nodes, topics, messages, services, params, components, colcon | whole repo |
+| Lesson 1 | [Terminal & Docker](lesson-01-terminal-and-docker.md) | Shell basics, what Docker is, how this container works, VNC | `docker/`, `start.*` |
+| Project 0 | [First ROS 2 C++ Node](first-cpp-node.md) | ROS C++ survival syntax; a small publisher/subscriber node | `ros_cpp_practice` |
+| Lesson 2 | [Coordinate Transforms & TF2](lesson-02-coordinate-transforms-and-tf.md) | Frames, rotations, quaternions, the TF tree, angle wrapping | `robonav_training_common` |
+| Lesson 3 | [URDF & the Robot Description](lesson-03-urdf-robot-description.md) | xacro, links, joints, sensors, ros2_control | `robonav_training_description` |
+| Lesson 4 | [Differential-Drive Kinematics](lesson-04-diff-drive-kinematics.md) | How two wheels turn into motion; the forward-kinematics math | (theory for 5) |
+| Lesson 5 | [Wheel Odometry](lesson-05-wheel-odometry.md) | Dead reckoning, integrating pose, why it drifts; implement the package from scratch | `wheel_odometry` |
+| Lesson 6 | [Sensors: IMU & Lidar](lesson-06-sensors-imu-lidar.md) | What an IMU and a lidar measure, noise, the Gazebo bridge | `robonav_training_description`, bringup |
+| Lesson 7 | [EKF & Sensor Fusion](lesson-07-ekf-sensor-fusion.md) | Bayesian filtering, the EKF, fusing wheels + IMU; implement the config package from scratch | `ekf_localization` |
+| Lesson 8 | [Occupancy Grids & the Map Server](lesson-08-occupancy-grids-map-server.md) | Maps as grids, PGM/YAML format, world↔grid math | `map_server`, `robonav_training_common` |
+| Lesson 9 | [Particle Filter (MCL)](lesson-09-particle-filter-mcl.md) | Monte Carlo Localization, likelihood fields, resampling; implement the noisy motion update | `particle_filter` |
+| Lesson 10 | [A* Path Planning](lesson-10-a-star-planning.md) | Graph search, heuristics, obstacle inflation; implement A* search | `a_star_planner` |
+| Lesson 11 | [Pure Pursuit Path Following](lesson-11-pure-pursuit.md) | Lookahead control, curvature, turning a path into `/cmd_vel`; implement the controller core | `pure_pursuit` |
+| Lesson 12 | [Putting It All Together](lesson-12-bringup-full-stack.md) | The full launch graph, data flow, debugging the stack | `robonav_training_bringup` |
 
 ## How to do the hands-on sections (read this once)
 
@@ -138,14 +138,11 @@ repeated each time:
   found, run `source /opt/ros/humble/setup.bash` first, then source the workspace.
 - **You'll need several terminals at once** — typically one for the simulator, one
   for the navigation stack, and one or more for `ros2 topic echo`/teleop.
-- **Two levels of "running."** Some hands-on steps need only the **simulator**
-  (`ros2 launch robonav_training_bringup sim.launch.py` — the robot, sensors, and
-  RViz). Others need the **full stack** (sim **plus**
-  `ros2 launch robonav_training_bringup navigation.launch.py` — localization,
-  planning, control). Each lesson says which it needs. **The full run procedure is
-  taught in [Lesson 12](lesson-12-bringup-full-stack.md)** — if a hands-on step
-  earlier than 12 says "with the full stack running," it's pointing forward to that;
-  you can read the lesson now and return to do its hands-on after Lesson 12.
+- **The runtime grows one project at a time.** Early lessons need only the
+  simulator. Lessons 5–11 add their package's standalone launch to the processes
+  from the previous checkpoint. Lesson 12 replaces those individual launches with
+  `navigation.launch.py`. You should never need to skip a checkpoint and return
+  later.
 - **RViz** is the 3D viewer (Lesson 1). You interact with the robot mostly through
   the **2D Goal Pose** toolbar button (send a navigation goal, Lesson 10). The
   particle filter in this repo starts with global localization, so you localize by

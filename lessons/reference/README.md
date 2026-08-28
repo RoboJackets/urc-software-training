@@ -1,50 +1,18 @@
-# RoboNav ROS 2 Reference
+# RoboNav Project References
 
-This folder is a syntax and workflow reference for the starter version of the
-RoboNav training. Use it when you know the concept you want, but forget the exact
-ROS 2 C++ syntax, launch syntax, CMake wiring, message type, or terminal command.
+Open the sheet with the same number as your project. Each sheet contains only the
+partial scaffolding needed for that project; the implementation steps tell you
+how to fill the gaps.
 
-It is intentionally practical. The examples match the style used in the starter
-files that appear later in the course:
-
-- C++17
-- `rclcpp`
-- composable nodes with `rclcpp_components`
-- `.hpp` declarations plus `.cpp` implementations
-- ROS-free algorithm cores where possible
-- launch files that run components in containers
-
-## Pages
-
-| Page | Use it for |
+| Project | Reference |
 | --- | --- |
-| [C++ node patterns](cpp-node-patterns.md) | Minimal `.hpp`/`.cpp` scaffolds, then separate entries for smart pointers, publishers, subscribers, parameters, timers, TF, and ROS-free cores |
-| [C++ algorithm patterns](cpp-algorithm-patterns.md) | vectors, safe indexing, math helpers, 2D rotations, priority queues, path reconstruction |
-| [Messages and QoS](messages-and-qos.md) | message headers, field names, common message types, QoS choices |
-| [Launch and parameters](launch-and-parameters.md) | standalone nodes, composable nodes, launch arguments, parameter passing |
-| [CMake and package.xml](cmake-package.md) | adding dependencies, libraries, components, executables, installs |
-| [Terminal commands](terminal-commands.md) | build, source, inspect topics/nodes/params/TF, debug common failures |
+| 0 | [NumberScaler](project-00-number-scaler.md) |
+| 5 | [Wheel Odometry](project-05-wheel-odometry.md) |
+| 7 | [EKF Localization](project-07-ekf-localization.md) |
+| 9 | [Particle Filter Motion Update](project-09-particle-filter.md) |
+| 10 | [A* Planning](project-10-a-star.md) |
+| 11 | [Pure Pursuit](project-11-pure-pursuit.md) |
+| 12 | [Full-Stack Integration](project-12-full-stack.md) |
 
-If the syntax on this page is new, complete
-[Your First ROS 2 C++ Node](../first-cpp-node.md) before Lesson 2.
-
-## How To Use This In Exercises
-
-When a lesson asks you to add a node or feature, start with the smallest relevant
-skeleton and add only the separate patterns that the application needs:
-
-1. Add includes and class members in the `.hpp`.
-2. Declare parameters in the constructor.
-3. Create publishers/subscribers/timers in the constructor.
-4. Implement callbacks in the `.cpp`.
-5. Wire dependencies in `CMakeLists.txt` and `package.xml` once the feature is
-   ready to compile.
-6. Add or update the launch file.
-7. Build, source, run, and inspect with terminal commands.
-
-The important habit is not memorizing every line. The habit is knowing which file
-owns which part of the ROS plumbing.
-
-Do not copy an entire reference example unchanged. Use only the pieces that make
-sense for the application you are building, then replace the example names,
-types, topics, parameters, and behavior with the requirements from the lesson.
+For shared build and inspection commands, use
+[Terminal Commands](terminal-commands.md).

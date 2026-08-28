@@ -1,9 +1,13 @@
 # Implementation Steps
 
 These files are the larger coding track for Lessons 4–12. The short
-[first-node practice](../first-cpp-node.md) comes earlier and is self-contained.
+[Project 0](../first-cpp-node.md) comes earlier and is self-contained.
 The main lesson pages explain the concepts; the implementation steps tell a
 student what to build in a starter repo.
+
+Use one loop throughout the course: read the numbered lesson, complete its
+implementation page, pass its build/runtime check, then move to the next lesson.
+Later projects assume every earlier checkpoint works.
 
 This repository is the student starter. Packages built from scratch are absent;
 later algorithm files contain TODO bodies that compile safely. Follow each lesson
@@ -55,36 +59,37 @@ Add new files explicitly with `git add path`; `git commit -a` does not include
 untracked files. Keep commits small enough that a teammate can review one idea at
 a time.
 
-Each implementation page points to the reference sheets that match its task.
-Keep those pages open, but do not copy a complete reference example. Adapt only
-the relevant pattern to the application named in the lesson.
+Each implementation page points to one numbered project sheet in
+[`lessons/reference`](../reference/README.md). Keep that sheet open while working.
+Its scaffolds are intentionally incomplete: use the requirements to fill the
+gaps instead of searching for a complete file to copy.
 
 ## What Students Build
 
 By the end of the implementation track, students will have written:
 
-- a small composable publisher/subscriber node in the pre-Lesson-2 practice
+- a small publisher/subscriber node in Project 0
 - a package from scratch
 - a header file
 - a composable C++ node
 - a launch file
 - subscribers
 - publishers
-- TF lookups and TF broadcasts
+- inspect and debug TF lookups and broadcasts
 - core robotics algorithms: odometry, sensor fusion configuration, localization,
   path planning, and path following
 
 ## Lesson Map
 
-| Lesson | Implementation role |
+| Step | Implementation role |
 | --- | --- |
-| Practice | Build a tiny composable publisher/subscriber node from scratch |
-| 4 | Paper math only; prepares the wheel odometry implementation |
-| 5 | Build `wheel_odometry` from scratch |
-| 6 | Inspect sensors; no new package required |
-| 7 | Build the `ekf_localization` config package and launch file from scratch |
-| 8 | Use the provided map server; no coding changes |
-| 9 | Implement the particle-filter motion update with scaled Gaussian noise |
-| 10 | Implement the A* search algorithm |
-| 11 | Implement the pure pursuit command computation |
-| 12 | Wire, run, and debug the full stack |
+| Project 0 | Build a tiny publisher/subscriber node from scratch |
+| Lesson 4 | Paper math only; prepares the wheel odometry implementation |
+| Lesson 5 | Build `wheel_odometry` from scratch |
+| Lesson 6 | Inspect sensors; no new package required |
+| Lesson 7 | Build the `ekf_localization` config package and launch file from scratch |
+| Lesson 8 | Use the provided map server; no coding changes |
+| Lesson 9 | Implement the particle-filter motion update with scaled Gaussian noise |
+| Lesson 10 | Implement the A* search algorithm |
+| Lesson 11 | Implement the pure pursuit command computation |
+| Lesson 12 | Wire, run, and debug the full stack |

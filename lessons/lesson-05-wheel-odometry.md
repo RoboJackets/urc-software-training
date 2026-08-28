@@ -8,7 +8,8 @@
 
 - `src/wheel_odometry/src/wheel_odometry.cpp` — the implementation.
 - `src/wheel_odometry/include/wheel_odometry/wheel_odometry.hpp` — class + state.
-- `src/wheel_odometry/launch/wheel_odometry.launch.py` — runs it as a component.
+- `src/wheel_odometry/launch/wheel_odometry.launch.py` — runs its generated
+  standalone executable; Lesson 12 loads the same class as a component.
 - Uses `robonav_training_common/angles.hpp` (`normalizeAngle`, Lesson 2).
 
 In your starter repo, this package is intentionally absent. Follow
@@ -171,10 +172,6 @@ Experiments:
    file, which doesn't take `-p`): `ros2 run wheel_odometry wheel_odometry
    --ros-args -p wheel_separation:=0.30`. Drive a square and watch the path fail to
    close — this is why the URDF and odometry constants must match.
-4. **(Come back to this after Lesson 7.)** Compare `/wheel/odometry` to
-   `/odometry/filtered` (the EKF output). Note that `/odometry/filtered` does not
-   exist until the EKF is running (full stack, Lesson 12), so `ros2 topic echo
-   /odometry/filtered` will print nothing before then — that's expected, not a bug.
 
 ## Video supplement
 

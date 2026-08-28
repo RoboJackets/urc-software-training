@@ -104,8 +104,8 @@ ros2 topic info /cmd_vel        # type + how many pubs/subs
 ros2 interface show nav_msgs/msg/Odometry   # the fields of a message type
 ```
 
-`/wheel/odometry` appears after you implement and launch wheel odometry in Lesson 5;
-the particle-filter and planner topics appear with the full stack in Lesson 12.
+`/wheel/odometry` appears after Lesson 5; localization, planning, and control
+topics appear one at a time as you complete Lessons 9–11.
 
 For a first pass, focus on nodes, topics, messages, building, and launching.
 Services, actions, and components are recognition-level ideas until later lessons.
@@ -238,18 +238,18 @@ sets it. Lesson 6 and 12 revisit why this matters.
 
 ## Hands-on
 
-You can't run much until Lesson 1 sets up the container, but you can practice the
-mental model now by reading code. The starter repo does not contain
-`wheel_odometry` yet, so do this reading after Lesson 5 creates that package; do
-not create it during Lesson 0.
+You cannot run ROS until Lesson 1 starts the container, but you can inspect the
+provided map server now:
 
-1. Open `src/wheel_odometry/src/wheel_odometry.cpp`. Find: where it creates a
-   **subscriber**, where it creates a **publisher**, and where it **declares
-   parameters**. (Hint: all in the constructor.)
-2. Open `src/wheel_odometry/launch/wheel_odometry.launch.py`. Identify which node
-   it launches and what parameter it sets.
-3. List which message **type** flows on `/joint_states` and which flows on
-   `/wheel/odometry`. (Lesson 5 explains the conversion between them.)
+1. Open `src/map_server/src/map_server.cpp`. Find the parameter declaration,
+   publisher creation, and `publish(...)` call.
+2. Open `src/map_server/launch/map_server.launch.py`. Find the package, plugin,
+   node name, and parameters passed to the component.
+3. Open `src/map_server/CMakeLists.txt`. Find the library target, dependency list,
+   component registration, and install rules.
+
+You will create the same package/node/launch/build layers yourself in Project 0
+and Lesson 5.
 
 ## Video supplement
 

@@ -209,29 +209,16 @@ publisher does this.
 
 ## Hands-on
 
-> **Heads-up on which frames exist when.** The `sim.launch.py` simulator alone only
-> publishes the *rigid body* frames `base_footprint → base_link → sensors`. The
-> `odom` frame appears only once the EKF runs, and `map` only once the particle
-> filter runs — both started by `navigation.launch.py` (the "full stack," Lesson
-> 12). So do steps 1–2 with the sim alone, and steps 3–4 after Lesson 12.
-
-**With just the simulator running** (`ros2 launch robonav_training_bringup
-sim.launch.py`):
+At this point the simulator publishes only the rigid body frames
+`base_footprint → base_link → sensors`. Start it with
+`ros2 launch robonav_training_bringup sim.launch.py`, then:
 
 1. `ros2 run tf2_tools view_frames` — it writes `frames.pdf` in the current folder.
    Open it; you'll see the `base_footprint → base_link → … → lidar_link` body tree.
 2. `ros2 run tf2_ros tf2_echo base_link lidar_link` — note the transform is constant
    (it's a rigid body, fixed by the URDF).
-
-**After Lesson 12, with the full stack running** (sim **plus**
-`navigation.launch.py`):
-
-3. `ros2 run tf2_ros tf2_echo odom base_footprint` — drive with teleop and watch it
-   change. Then run `view_frames` again and confirm the full
-   `map → odom → base_footprint → … → lidar_link` chain now exists.
-4. In RViz, set **Fixed Frame** to `odom`, drive, and watch `base_footprint` move
-   smoothly. Switch Fixed Frame to `map` and watch the robot occasionally *hop* —
-   that's the particle filter's `map→odom` correction (Lesson 9).
+3. In RViz, enable the **TF** display and identify `base_footprint`, `base_link`,
+   and `lidar_link`. Lesson 7 adds `odom`; Lesson 9 adds `map`.
 
 ## Video supplement
 

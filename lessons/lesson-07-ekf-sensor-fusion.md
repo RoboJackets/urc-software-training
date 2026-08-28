@@ -223,8 +223,6 @@ ros2 topic echo /odometry/filtered
 ros2 run tf2_ros tf2_echo odom base_footprint   # the EKF's transform
 ```
 
-(Or just run the whole stack from Lesson 12, which starts all of these for you.)
-
 Experiments:
 
 1. Drive in a circle and compare `/wheel/odometry` vs `/odometry/filtered`. The

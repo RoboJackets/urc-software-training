@@ -129,10 +129,11 @@ lesson.
 
 ## Running the whole thing — the golden path
 
-> **This is the run procedure that earlier lessons' hands-on sections pointed to.**
-> Whenever a lesson said "with the full stack running," it meant the six steps below.
-> For the coding track, also use
-> [Lesson 12 implementation steps](implementation-steps/lesson-12-integration.md).
+First complete the
+[Lesson 12 implementation steps](implementation-steps/lesson-12-integration.md).
+You are replacing the individual launches used in Lessons 5–11 with one reusable
+navigation launch; the simulator remains separate so it can stay running while
+you restart your code.
 
 1. **Build & source** (Lesson 1), in a TigerVNC terminal or container shell:
    ```sh
@@ -215,7 +216,10 @@ Step back and appreciate the design choices you've now seen end to end:
 That's the same philosophy stated in the root `README.md`: simplicity,
 readability, and separation of responsibility above all.
 
-## Hands-on
+## Final Proficiency Check
+
+The course is complete when you can do these without copying a completed
+implementation:
 
 1. Run the golden path above and successfully send the robot to three different
    goals.
@@ -255,6 +259,11 @@ loop, all observable and debuggable from the terminal. You now understand — an
 run — a complete autonomous navigation stack, from `/joint_states` to `/cmd_vel` and
 back.
 
-🎉 **You've finished the course.** Revisit any lesson's *Hands-on* section to go
-deeper, and read the source of your favorite package now that you know the whole
-picture. The repo's `README.md` is your quick command reference from here on.
+🎉 **You've finished the course.** If you completed every implementation and
+checkpoint—not only the reading—you now have working ROS 2 proficiency for a
+small navigation stack: you can build packages, connect and launch nodes, reason
+about TF and QoS, inspect the graph, and debug data flow end to end. Services,
+actions, custom interfaces, hardware deployment, and Nav2 are the next layer.
+
+Keep the skill by changing this stack, building a small personal project, or
+using the same workflow in research. ROS becomes comfortable through repetition.

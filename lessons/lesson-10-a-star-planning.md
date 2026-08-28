@@ -172,9 +172,12 @@ the node reusable without recompiling.
 First complete
 [Lesson 10 implementation steps](implementation-steps/lesson-10-a-star.md).
 
-The planner needs the map and a localized robot pose, so this uses the **full
-stack** (sim **plus** `navigation.launch.py` — run procedure in **Lesson 12**). Read
-now, do after Lesson 12.
+Keep the Lesson 9 localization checkpoint running. After the particle cloud
+converges, add the planner in one new sourced terminal:
+
+```sh
+ros2 launch a_star_planner a_star_planner.launch.py
+```
 
 > **Using the "2D Goal Pose" tool** (your main way to command the robot): it's a
 > button in RViz's top toolbar. Click it, then **click-and-drag** on the map — the
@@ -194,9 +197,8 @@ In RViz:
    distance (that's inflation).
 3. Place a goal *inside* a wall or unreachable region — watch the planner publish an
    empty path (no solution).
-4. Tune `inflation_radius` (edit the value in `navigation.launch.py` and relaunch
-   the navigation stack): see paths hug walls vs. stay far away. Too small → the
-   robot clips corners; too big → no path through tight gaps.
+4. Tune `inflation_radius` in `a_star_planner.launch.py` and relaunch the planner.
+   Too small makes paths hug walls; too large can close narrow passages.
 
 ## Video supplement
 

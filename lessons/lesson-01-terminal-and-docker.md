@@ -289,5 +289,4 @@ built from a **Dockerfile**; **Compose** starts it with the repo bind-mounted at
 `/workspace`; **VNC** gives you a desktop for Gazebo/RViz. Inside, you live in a
 **bash** terminal, build with **colcon**, and drive ROS with `ros2 ...` commands.
 
-➡️ **Next:** [Practice — Your First ROS 2 C++ Node](first-cpp-node.md), then
-[Lesson 2 — Coordinate Transforms & TF2](lesson-02-coordinate-transforms-and-tf.md).
+➡️ **Next:** [Project 0 — Your First ROS 2 C++ Node](first-cpp-node.md).

@@ -10,12 +10,22 @@ it. Like any skill, becoming genuinely good at ROS takes repetition. Personal
 projects, research, and simply experimenting with this training repo—changing a
 parameter, tracing a topic, or reading more of the code—will help tremendously.
 
+Basic C++ knowledge is assumed. This course teaches ROS 2 and robotics patterns,
+not the C++ language itself. If headers, classes, references, `const`, or smart
+pointers such as `std::unique_ptr` and `std::shared_ptr` are unfamiliar, pause and
+search YouTube for **"C++ basics for beginners"** and **"modern C++ smart
+pointers"**, then complete one beginner overview before Project 0.
+
 After going through this file, start with the
 [course overview and lesson list](lessons/README.md). Work through the lessons in
 order; each lesson points to the code it explains and includes a hands-on
 checkpoint. Lessons 5, 7, and 9–12 link to implementation steps for the packages,
 functions, and launch wiring you will complete; the short first-node practice
 comes immediately after Lesson 1.
+
+Completing the code and every checkpoint gives you working proficiency with the
+ROS 2 skills used in a small navigation system: packages, nodes, topics,
+parameters, launch files, TF, components, QoS, and graph-based debugging.
 
 The development environment is Ubuntu 22.04 with an XFCE desktop, Gazebo, RViz,
 and ROS 2 Humble, all provided through Docker and TigerVNC.

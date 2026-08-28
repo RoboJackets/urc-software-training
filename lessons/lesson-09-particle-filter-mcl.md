@@ -78,11 +78,9 @@ temporary set is replaced as soon as `/map` arrives, because map-based global
 localization is the behavior this course demonstrates.
 
 Key parameter: **`num_particles`** — more particles = more accurate but more CPU.
-The code default is 250, but `navigation.launch.py` (Lesson 12) overrides it to
-**2000** for the full stack, along with tuned noise/likelihood values. **The numbers
-that actually run are the launch-file ones**, so where this lesson lists a code
-default, check `navigation.launch.py` for the value used in the real demo (e.g.
-`z_hit` 0.95, `z_rand` 0.05, `sigma_hit` 0.05, much smaller `*_noise`).
+The standalone checkpoint in this lesson uses the code default of 250. Lesson 12's
+integrated launch raises it to **2000** and supplies the final tuned noise and
+likelihood values.
 
 ## Step 1 — Motion update
 
@@ -227,9 +225,15 @@ keep the robot globally aligned to the map.
 First complete
 [Lesson 9 implementation steps](implementation-steps/lesson-09-particle-filter.md).
 
-The particle filter needs the map, the EKF, and the lidar all running, so this uses
-the **full stack** — the run procedure is in **Lesson 12** (sim **plus**
-`navigation.launch.py`). Read this now and do it after Lesson 12.
+Start the simulator, wheel odometry, and EKF exactly as in Lesson 7. Also start the
+map server from Lesson 8. Then add the particle filter in a new sourced terminal:
+
+```sh
+ros2 launch particle_filter particle_filter.launch.py
+```
+
+This is the localization stack you have built so far. In another terminal, drive
+with teleop and inspect:
 
 ```sh
 ros2 topic echo /amcl_pose --once
@@ -244,8 +248,9 @@ In RViz:
    thing to watch in the whole course.
 2. Set Fixed Frame to `map`. Note the robot occasionally **hops** as `map→odom`
    updates — that's the correction (vs. the smooth `odom` frame from the EKF).
-3. Tune and observe: lower `num_particles` (cloud gets ragged), raise `*_noise`
-   (cloud stays spread), raise `beam_stride` (faster, less precise).
+3. Increase the existing `random_particle_percent` value in
+   `particle_filter.launch.py`, relaunch, and watch more random hypotheses remain
+   scattered while the main cloud converges.
 
 ## Video supplement
 

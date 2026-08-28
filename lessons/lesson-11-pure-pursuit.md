@@ -167,8 +167,14 @@ That's the full sense → think → act loop running continuously. Pure pursuit 
 First complete
 [Lesson 11 implementation steps](implementation-steps/lesson-11-pure-pursuit.md).
 
-This uses the **full stack** (sim **plus** `navigation.launch.py` — run procedure in
-**Lesson 12**). Read now, do after Lesson 12.
+Keep the Lesson 10 localization and planning processes running, then add the
+controller in one new sourced terminal:
+
+```sh
+ros2 launch pure_pursuit pure_pursuit.launch.py
+```
+
+In another terminal, watch its output:
 
 ```sh
 ros2 topic echo /cmd_vel       # watch the velocity commands while navigating
@@ -181,10 +187,8 @@ In RViz:
    the path.
 2. Watch it **ease to a stop** near the goal (the slowdown logic) and log "goal
    reached."
-3. Tune `lookahead_distance`. Because pure_pursuit runs inside the shared component
-   container, the simplest way is to **edit its value in `navigation.launch.py` and
-   relaunch the navigation stack** (a runtime `-p` override won't reach a composed
-   component). Try 0.6 vs 0.15 and watch corner-cutting vs. oscillation.
+3. Tune `lookahead_distance` in `pure_pursuit.launch.py` and relaunch the
+   controller. Try 0.6 vs. 0.15 and watch corner-cutting vs. oscillation.
 4. With no goal set, drive with teleop — confirm pure pursuit stays quiet and
    doesn't fight you (the "no path → don't publish" behavior).
 
