@@ -36,6 +36,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     net-tools \
     openssh-client \
     python3-pip \
+    software-properties-common \
     sudo \
     tigervnc-common \
     tigervnc-standalone-server \
@@ -54,14 +55,18 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 \
     && rm -rf /var/lib/apt/lists/*
 
-RUN curl -sSL https://packages.osrfoundation.org/gazebo.gpg \
+RUN add-apt-repository universe \
+    && ROS_APT_SOURCE_VERSION="$(curl -fsSL https://api.github.com/repos/ros-infrastructure/ros-apt-source/releases/latest | grep -F '"tag_name"' | awk -F'"' '{print $4}')" \
+    && test -n "${ROS_APT_SOURCE_VERSION}" \
+    && curl -fsSL \
+      -o /tmp/ros2-apt-source.deb \
+      "https://github.com/ros-infrastructure/ros-apt-source/releases/download/${ROS_APT_SOURCE_VERSION}/ros2-apt-source_${ROS_APT_SOURCE_VERSION}.$(. /etc/os-release && echo "${UBUNTU_CODENAME:-${VERSION_CODENAME}}")_all.deb" \
+    && dpkg -i /tmp/ros2-apt-source.deb \
+    && rm -f /tmp/ros2-apt-source.deb \
+    && curl -fsSL https://packages.osrfoundation.org/gazebo.gpg \
       -o /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg \
     && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] https://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" \
       > /etc/apt/sources.list.d/gazebo-stable.list \
-    && curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key \
-      -o /usr/share/keyrings/ros-archive-keyring.gpg \
-    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" \
-      > /etc/apt/sources.list.d/ros2.list \
     && apt-get update \
     && apt-get install -y --no-install-recommends \
       libeigen3-dev \
