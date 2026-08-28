@@ -78,11 +78,48 @@ Parameter shape:
 parameters=[config_file, {"use_sim_time": use_sim_time}],
 ```
 
-## CMake Fragment
+## `package.xml`
 
-Add before `ament_package()`:
+Copy this complete file to `ekf_localization/package.xml`:
+
+```xml
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>ekf_localization</name>
+  <version>0.1.0</version>
+  <description>robot_localization EKF configuration (wheel odometry + IMU fusion) for the RoboNav software training.</description>
+  <maintainer email="joey.marra2007@gmail.com">URC Software Training</maintainer>
+  <license>Apache-2.0</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <exec_depend>robot_localization</exec_depend>
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
+```
+
+## `CMakeLists.txt`
+
+Copy this complete file to `ekf_localization/CMakeLists.txt`:
 
 ```cmake
-install(DIRECTORY config launch
-  DESTINATION share/${PROJECT_NAME})
+cmake_minimum_required(VERSION 3.8)
+project(ekf_localization)
+
+find_package(ament_cmake REQUIRED)
+
+# This package contributes no compiled code: it configures and launches the EKF
+# from the robot_localization package. We only install the config and launch.
+install(
+  DIRECTORY config launch
+  DESTINATION share/${PROJECT_NAME}
+)
+
+ament_package()
 ```

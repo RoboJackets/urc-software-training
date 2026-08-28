@@ -35,15 +35,10 @@ CMakeLists.txt
 package.xml
 ```
 
-## 2. Update `package.xml`
+## 2. Copy `package.xml`
 
-The creation command added the C++ dependencies. Add these launch dependencies
-before `<export>`:
-
-```xml
-<exec_depend>launch</exec_depend>
-<exec_depend>launch_ros</exec_depend>
-```
+Copy the complete [`package.xml`](reference/project-00-number-scaler.md#packagexml)
+from the reference.
 
 ## 3. Write The Header
 
@@ -74,17 +69,11 @@ In `onNumber`, use the [callback shape](reference/project-00-number-scaler.md#ca
 and set the new message's `data` to `msg->data * scale_`.
 Register the component as `robonav_training::NumberScaler` after the namespace.
 
-## 5. Wire CMake
+## 5. Copy `CMakeLists.txt`
 
-Add the [CMake fragments](reference/project-00-number-scaler.md#cmake-fragments)
-before the generated `ament_package()` line. They must:
-
-- build `src/number_scaler.cpp` as `number_scaler_component`
-- expose `include/`
-- attach `rclcpp`, `rclcpp_components`, and `std_msgs`
-- register plugin `robonav_training::NumberScaler`
-- generate executable `number_scaler`
-- install the library, header, and launch directory
+Copy the complete
+[`CMakeLists.txt`](reference/project-00-number-scaler.md#cmakeliststxt)
+from the reference. It builds and installs the component, header, and launch file.
 
 ## 6. Write The Launch File
 

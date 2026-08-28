@@ -58,7 +58,7 @@ colcon build --symlink-install --packages-select pure_pursuit
 source install/setup.bash
 ```
 
-The runtime check happens after Project 12. Confirm:
+Then follow the Lesson 11 hands-on checkpoint. Confirm:
 
 - an empty path produces no movement
 - a point on the left produces positive angular velocity

@@ -25,12 +25,8 @@ src/wheel_odometry.cpp
 launch/wheel_odometry.launch.py
 ```
 
-Add these to `package.xml` before `<export>`:
-
-```xml
-<exec_depend>launch</exec_depend>
-<exec_depend>launch_ros</exec_depend>
-```
+Copy the complete [`package.xml`](../reference/project-05-wheel-odometry.md#packagexml)
+from the reference.
 
 ## 2. Create A Buildable Node Skeleton
 
@@ -43,8 +39,9 @@ The class needs:
 - a `JointState` subscription and `Odometry` publisher
 - private methods `onJointState(...)` and `publishOdometry(...)`
 
-Add the [CMake fragments](../reference/project-05-wheel-odometry.md#cmake-fragments)
-before `ament_package()`.
+Copy the complete
+[`CMakeLists.txt`](../reference/project-05-wheel-odometry.md#cmakeliststxt)
+from the reference.
 
 ## 3. Set Up The Constructor
 

@@ -24,20 +24,14 @@ config/ekf.yaml
 launch/ekf_localization.launch.py
 ```
 
-Add these to `package.xml` before `<export>`:
-
-```xml
-<exec_depend>launch</exec_depend>
-<exec_depend>launch_ros</exec_depend>
-```
-
-Keep the generated `robot_localization` dependency.
+Copy the complete [`package.xml`](../reference/project-07-ekf-localization.md#packagexml)
+from the reference.
 
 ## 2. Update CMake
 
-This package has no C++ target. Add the install block from the
-[reference](../reference/project-07-ekf-localization.md#cmake-fragment)
-before `ament_package()`.
+This package has no C++ target. Copy the complete
+[`CMakeLists.txt`](../reference/project-07-ekf-localization.md#cmakeliststxt)
+from the reference.
 
 ## 3. Write `ekf.yaml`
 

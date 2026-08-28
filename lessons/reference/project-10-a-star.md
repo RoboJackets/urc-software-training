@@ -79,3 +79,87 @@ while (index != -1) {
 
 return std::vector<int>(reversed.rbegin(), reversed.rend());
 ```
+
+## `package.xml`
+
+The package already contains this file. Use it unchanged:
+
+```xml
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>a_star_planner</name>
+  <version>0.1.0</version>
+  <description>A* grid path planner component for the RoboNav software training.</description>
+  <maintainer email="joey.marra2007@gmail.com">URC Software Training</maintainer>
+  <license>Apache-2.0</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>rclcpp_components</depend>
+  <depend>nav_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>tf2</depend>
+  <depend>tf2_ros</depend>
+  <depend>tf2_geometry_msgs</depend>
+  <depend>robonav_training_common</depend>
+
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
+```
+
+## `CMakeLists.txt`
+
+The package already contains this file. Use it unchanged:
+
+```cmake
+cmake_minimum_required(VERSION 3.8)
+project(a_star_planner)
+
+if(NOT CMAKE_CXX_STANDARD)
+  set(CMAKE_CXX_STANDARD 17)
+endif()
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  add_compile_options(-Wall -Wextra -Wpedantic)
+endif()
+
+find_package(ament_cmake REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(rclcpp_components REQUIRED)
+find_package(nav_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
+find_package(tf2 REQUIRED)
+find_package(tf2_ros REQUIRED)
+find_package(tf2_geometry_msgs REQUIRED)
+find_package(robonav_training_common REQUIRED)
+
+include_directories(include)
+
+# ROS-free A* search core.
+add_library(a_star_search STATIC src/a_star_search.cpp)
+set_target_properties(a_star_search PROPERTIES POSITION_INDEPENDENT_CODE ON)
+ament_target_dependencies(a_star_search robonav_training_common)
+
+# Composable component (+ standalone `a_star_planner` executable).
+add_library(a_star_planner_component SHARED src/a_star_planner.cpp)
+target_link_libraries(a_star_planner_component a_star_search)
+ament_target_dependencies(a_star_planner_component
+  rclcpp rclcpp_components nav_msgs geometry_msgs tf2 tf2_ros tf2_geometry_msgs robonav_training_common)
+rclcpp_components_register_node(a_star_planner_component
+  PLUGIN "robonav_training::AStarPlanner"
+  EXECUTABLE a_star_planner)
+
+install(TARGETS a_star_planner_component
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin)
+install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
+
+ament_package()
+```

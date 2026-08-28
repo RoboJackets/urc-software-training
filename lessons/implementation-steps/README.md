@@ -14,6 +14,16 @@ later algorithm files contain TODO bodies that compile safely. Follow each lesso
 in order and do not copy completed implementations from the separate answer-key
 repository until after attempting the exercise.
 
+## Build metadata (read once)
+
+`package.xml` tells ROS which packages and runtime tools a project depends on.
+`CMakeLists.txt` tells the compiler what to build and tells ROS which headers,
+libraries, configs, and launch files to install. These files are mostly boilerplate
+for this course, so each project reference now includes the exact versions to use.
+Copy those two files into the project, then focus on the C++/YAML/launch work the
+lesson assigns. Understand what each file controls; you do not need to invent the
+build metadata.
+
 ## Build Discipline
 
 - Add source files and headers as the lesson asks for them.

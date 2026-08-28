@@ -62,7 +62,7 @@ colcon build --symlink-install --packages-select a_star_planner
 source install/setup.bash
 ```
 
-The runtime check happens after Project 12. Send a free-space goal in RViz and
+Then follow the Lesson 10 hands-on checkpoint. Send a free-space goal in RViz and
 confirm `/plan` contains a path. Also check:
 
 - start equals goal returns one cell

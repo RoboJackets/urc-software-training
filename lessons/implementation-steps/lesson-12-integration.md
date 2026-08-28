@@ -16,16 +16,12 @@ projects are complete:
 
 Do not debug integration while an individual package still fails to build.
 
-## 2. Update Bringup Dependencies
+## 2. Copy Build Metadata
 
-Add these to `src/robonav_training_bringup/package.xml`:
-
-```xml
-<exec_depend>wheel_odometry</exec_depend>
-<exec_depend>ekf_localization</exec_depend>
-```
-
-The other navigation-package dependencies are already present.
+Copy the complete [`package.xml`](../reference/project-12-full-stack.md#packagexml)
+and [`CMakeLists.txt`](../reference/project-12-full-stack.md#cmakeliststxt) from
+the reference. They include all navigation dependencies and install the
+launch/config/world files.
 
 ## 3. Complete `navigation.launch.py`
 

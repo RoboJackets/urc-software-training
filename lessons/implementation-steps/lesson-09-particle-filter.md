@@ -55,6 +55,6 @@ colcon build --symlink-install --packages-select particle_filter
 source install/setup.bash
 ```
 
-The runtime check happens after Project 12 launches the full stack. In RViz,
-driving should move the particle cloud along each particle's heading and spread
-it slightly. If particles always move along map x, recheck the rotation.
+Then follow the Lesson 9 hands-on checkpoint. Driving should move the particle
+cloud along each particle's heading and spread it slightly. If particles always
+move along map x, recheck the rotation.
