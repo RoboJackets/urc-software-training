@@ -2,19 +2,33 @@
 
 This page shows the C++ syntax patterns used by the training packages.
 
+## Modern C++ Smart Pointers
+
+ROS 2 uses smart pointers to make object ownership and lifetime explicit. Brush
+up on these before the larger C++ lessons:
+
+- `std::unique_ptr<T>` means one owner. It cannot be copied, but ownership can be
+  moved. Create one with `std::make_unique<T>(...)`.
+- `std::shared_ptr<T>` means multiple pieces of code may share ownership. The
+  object is destroyed after the last owner releases it. Create one with
+  `std::make_shared<T>(...)`.
+- ROS aliases such as `Message::SharedPtr` and
+  `rclcpp::Publisher<Message>::SharedPtr` are shared pointers.
+- Use `pointer->method()` to access an object through either kind of pointer.
+
+Prefer `unique_ptr` when one object clearly owns a resource and `shared_ptr` when
+an API, such as a ROS callback, intentionally shares it. The examples below use
+both; you do not need to manage either one with `new` or `delete`.
+
 ## Header File Skeleton
 
-Use the header for class declarations, callback declarations, state, publishers,
-subscribers, timers, and TF objects.
+Start with only the node class and constructor declaration. Add callbacks and
+members later from the focused patterns below when the node actually needs them.
 
 ```cpp
 #pragma once
 
-#include <memory>
-#include <string>
-
 #include <rclcpp/rclcpp.hpp>
-#include <std_msgs/msg/string.hpp>
 
 namespace robonav_training
 {
@@ -25,15 +39,7 @@ public:
   explicit ExampleNode(const rclcpp::NodeOptions & options);
 
 private:
-  void onMessage(const std_msgs::msg::String::SharedPtr msg);
-  void onTimer();
-
-  std::string input_topic_;
-  double publish_rate_{10.0};
-
-  rclcpp::Subscription<std_msgs::msg::String>::SharedPtr sub_;
-  rclcpp::Publisher<std_msgs::msg::String>::SharedPtr pub_;
-  rclcpp::TimerBase::SharedPtr timer_;
+  // Add only the callbacks and members this node needs.
 };
 
 }  // namespace robonav_training
@@ -47,15 +53,11 @@ Answer-key or later-starter examples:
 
 ## Source File Skeleton
 
-Use the `.cpp` for constructor logic and callback bodies.
+Start with the constructor and component registration. Add parameter declarations,
+ROS interfaces, and callback bodies from the separate entries below.
 
 ```cpp
 #include "example_package/example_node.hpp"
-
-#include <chrono>
-#include <functional>
-
-using namespace std::chrono_literals;
 
 namespace robonav_training
 {
@@ -63,31 +65,7 @@ namespace robonav_training
 ExampleNode::ExampleNode(const rclcpp::NodeOptions & options)
 : Node("example_node", options)
 {
-  input_topic_ = declare_parameter<std::string>("input_topic", "/input");
-  publish_rate_ = declare_parameter<double>("publish_rate", 10.0);
-
-  sub_ = create_subscription<std_msgs::msg::String>(
-    input_topic_, 10,
-    std::bind(&ExampleNode::onMessage, this, std::placeholders::_1));
-
-  pub_ = create_publisher<std_msgs::msg::String>("/output", 10);
-
-  const auto period = std::chrono::duration<double>(1.0 / publish_rate_);
-  timer_ = create_wall_timer(
-    std::chrono::duration_cast<std::chrono::milliseconds>(period),
-    std::bind(&ExampleNode::onTimer, this));
-}
-
-void ExampleNode::onMessage(const std_msgs::msg::String::SharedPtr msg)
-{
-  RCLCPP_INFO(get_logger(), "Heard: %s", msg->data.c_str());
-}
-
-void ExampleNode::onTimer()
-{
-  std_msgs::msg::String msg;
-  msg.data = "hello";
-  pub_->publish(msg);
+  // Add only the setup this node needs.
 }
 
 }  // namespace robonav_training
@@ -96,23 +74,28 @@ void ExampleNode::onTimer()
 RCLCPP_COMPONENTS_REGISTER_NODE(robonav_training::ExampleNode)
 ```
 
-Key details:
-
-- `declare_parameter<T>("name", default_value)` registers and reads a parameter.
-- `create_subscription<MessageType>(topic, qos, callback)` creates a subscriber.
-- `create_publisher<MessageType>(topic, qos)` creates a publisher.
-- `std::bind(..., std::placeholders::_1)` connects a one-argument callback.
-- `RCLCPP_COMPONENTS_REGISTER_NODE(...)` makes the class loadable as a component.
+`RCLCPP_COMPONENTS_REGISTER_NODE(...)` makes the class loadable as a component.
+The focused entries below show what to add inside this scaffold.
 
 ## Publisher Pattern
+
+Header additions:
 
 ```cpp
 #include <geometry_msgs/msg/twist.hpp>
 
 rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr cmd_vel_pub_;
+```
 
+Constructor addition:
+
+```cpp
 cmd_vel_pub_ = create_publisher<geometry_msgs::msg::Twist>("/cmd_vel", 10);
+```
 
+Where the node publishes:
+
+```cpp
 geometry_msgs::msg::Twist cmd;
 cmd.linear.x = 0.3;
 cmd.angular.z = 0.0;
@@ -125,19 +108,27 @@ Answer-key or later-starter example:
 
 ## Subscriber Pattern
 
+Header additions:
+
 ```cpp
 #include <sensor_msgs/msg/joint_state.hpp>
 
 void onJointState(const sensor_msgs::msg::JointState::SharedPtr msg);
 
 rclcpp::Subscription<sensor_msgs::msg::JointState>::SharedPtr joint_sub_;
+```
+
+Source include and constructor addition:
+
+```cpp
+#include <functional>
 
 joint_sub_ = create_subscription<sensor_msgs::msg::JointState>(
   "/joint_states", 10,
   std::bind(&MyNode::onJointState, this, std::placeholders::_1));
 ```
 
-Callback:
+Source callback definition:
 
 ```cpp
 void MyNode::onJointState(const sensor_msgs::msg::JointState::SharedPtr msg)
@@ -154,10 +145,16 @@ Implemented in Lesson 5:
 
 ## Parameter Pattern
 
+Header member:
+
+```cpp
+double wheel_radius_{0.075};
+```
+
+Constructor addition:
+
 ```cpp
 wheel_radius_ = declare_parameter<double>("wheel_radius", 0.075);
-left_joint_name_ = declare_parameter<std::string>("left_joint_name", "left_wheel_joint");
-allow_unknown_ = declare_parameter<bool>("allow_unknown", false);
 ```
 
 Parameters can be set from launch:
@@ -182,7 +179,20 @@ ros2 param get /wheel_odometry wheel_radius
 
 Use timers for repeated control loops, not for sensor callbacks.
 
+Header additions:
+
 ```cpp
+void controlStep();
+double control_rate_{20.0};
+rclcpp::TimerBase::SharedPtr timer_;
+```
+
+Source includes and constructor addition:
+
+```cpp
+#include <chrono>
+#include <functional>
+
 control_rate_ = declare_parameter<double>("control_rate", 20.0);
 
 timer_ = create_wall_timer(
@@ -190,6 +200,8 @@ timer_ = create_wall_timer(
     std::chrono::duration<double>(1.0 / control_rate_)),
   std::bind(&PurePursuit::controlStep, this));
 ```
+
+Define `controlStep()` separately in the source file.
 
 Answer-key or later-starter example:
 
@@ -202,6 +214,7 @@ Use a TF listener when your node needs the current robot pose or a sensor offset
 Header:
 
 ```cpp
+#include <memory>
 #include <tf2_ros/buffer.h>
 #include <tf2_ros/transform_listener.h>
 

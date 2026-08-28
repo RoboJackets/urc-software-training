@@ -21,6 +21,14 @@ docker compose exec ros2-humble-vnc bash
 
 ## Build And Source
 
+Load the base ROS 2 Humble environment. The training container normally does this
+automatically, but running it explicitly is safe and is useful when `ros2` is not
+found:
+
+```sh
+source /opt/ros/humble/setup.bash
+```
+
 Build:
 
 ```sh
@@ -32,6 +40,10 @@ Source in every new VNC terminal or `docker compose exec` shell:
 ```sh
 source install/setup.bash
 ```
+
+The `/opt/ros/...` script is the ROS installation (the **underlay**). The
+`install/...` script is this workspace (the **overlay**). Source them in that
+order whenever you need both.
 
 Build one package:
 

@@ -18,7 +18,7 @@ files that appear later in the course:
 
 | Page | Use it for |
 | --- | --- |
-| [C++ node patterns](cpp-node-patterns.md) | `.hpp`/`.cpp` node scaffolds, publishers, subscribers, timers, parameters, TF |
+| [C++ node patterns](cpp-node-patterns.md) | Minimal `.hpp`/`.cpp` scaffolds, then separate entries for smart pointers, publishers, subscribers, parameters, timers, TF, and ROS-free cores |
 | [C++ algorithm patterns](cpp-algorithm-patterns.md) | vectors, safe indexing, math helpers, 2D rotations, priority queues, path reconstruction |
 | [Messages and QoS](messages-and-qos.md) | message headers, field names, common message types, QoS choices |
 | [Launch and parameters](launch-and-parameters.md) | standalone nodes, composable nodes, launch arguments, parameter passing |
@@ -30,7 +30,8 @@ If the syntax on this page is new, complete
 
 ## How To Use This In Exercises
 
-When a lesson asks you to add a node or feature, prefer this shape:
+When a lesson asks you to add a node or feature, start with the smallest relevant
+skeleton and add only the separate patterns that the application needs:
 
 1. Add includes and class members in the `.hpp`.
 2. Declare parameters in the constructor.
@@ -43,3 +44,7 @@ When a lesson asks you to add a node or feature, prefer this shape:
 
 The important habit is not memorizing every line. The habit is knowing which file
 owns which part of the ROS plumbing.
+
+Do not copy an entire reference example unchanged. Use only the pieces that make
+sense for the application you are building, then replace the example names,
+types, topics, parameters, and behavior with the requirements from the lesson.

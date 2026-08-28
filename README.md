@@ -5,6 +5,11 @@ This repository is the **student starter** for a 13-lesson course plus one short
 C++ node practice, covering ROS basics, coordinate frames, robot description,
 localization, planning, control, and full-stack integration.
 
+This course is meant to get you familiar with ROS 2 and comfortable working with
+it. Like any skill, becoming genuinely good at ROS takes repetition. Personal
+projects, research, and simply experimenting with this training repo—changing a
+parameter, tracing a topic, or reading more of the code—will help tremendously.
+
 After going through this file, start with the
 [course overview and lesson list](lessons/README.md). Work through the lessons in
 order; each lesson points to the code it explains and includes a hands-on
@@ -105,6 +110,7 @@ docker compose exec ros2-humble-vnc bash
 Build the mounted ROS workspace from that container shell:
 
 ```sh
+source /opt/ros/humble/setup.bash
 colcon build --symlink-install
 source install/setup.bash
 ```

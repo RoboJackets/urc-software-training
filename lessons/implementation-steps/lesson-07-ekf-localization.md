@@ -15,6 +15,16 @@ The EKF combines two noisy measurements into one smooth local estimate:
 This lesson is mostly YAML and Python launch code, but those files are still a
 ROS package so they can be installed and found with `ros2 launch`.
 
+## Keep These References Open
+
+- [config-only package and install patterns](../reference/cmake-package.md)
+- [regular node launch pattern and parameters](../reference/launch-and-parameters.md)
+- [message fields](../reference/messages-and-qos.md)
+- [build, source, topic, and TF commands](../reference/terminal-commands.md)
+
+Adapt only the YAML, launch, package, and terminal patterns needed for this EKF;
+do not copy an unrelated reference example unchanged.
+
 ## Create The Package
 
 From `/workspace/src`:

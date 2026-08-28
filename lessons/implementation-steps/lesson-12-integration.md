@@ -10,6 +10,16 @@ There are two launch files because they have different jobs:
 Keep them in separate terminals. This makes it possible to restart navigation
 after a code change without restarting Gazebo.
 
+## Keep These References Open
+
+- [multiple components in one container](../reference/launch-and-parameters.md#multiple-components-in-one-container)
+- [launch arguments and parameters](../reference/launch-and-parameters.md#launch-arguments)
+- [topic message types and QoS](../reference/messages-and-qos.md)
+- [run, inspect, and debugging commands](../reference/terminal-commands.md)
+
+Use these as wiring and debugging patterns. Keep the package, plugin, topic,
+frame, and parameter values specified by this integration lesson.
+
 ## Before Wiring The Full Stack
 
 Each piece should already pass every check that is possible before integration:

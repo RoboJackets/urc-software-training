@@ -45,6 +45,9 @@ If a package only provides launch/config files, it may have mostly
 
 ## CMake Package Skeleton
 
+Start with the package only. Add dependencies, targets, registration, and install
+rules from the separate entries below as the package needs them.
+
 ```cmake
 cmake_minimum_required(VERSION 3.8)
 project(example_package)
@@ -57,29 +60,32 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 endif()
 
 find_package(ament_cmake REQUIRED)
+
+ament_package()
+```
+
+## Adding A Component Library
+
+Add only the dependencies used by the node. Place this before `ament_package()`:
+
+```cmake
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_components REQUIRED)
 find_package(std_msgs REQUIRED)
 
-include_directories(include)
-
 add_library(example_component SHARED src/example_node.cpp)
+target_include_directories(example_component PUBLIC include)
 ament_target_dependencies(example_component
   rclcpp rclcpp_components std_msgs)
-
-rclcpp_components_register_node(example_component
-  PLUGIN "robonav_training::ExampleNode"
-  EXECUTABLE example_node)
 
 install(TARGETS example_component
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin)
-
-install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
-
-ament_package()
+install(DIRECTORY include/ DESTINATION include)
 ```
+
+Component registration and optional folder installs are separate steps below.
 
 ## Adding A ROS-Free Core Library
 

@@ -7,6 +7,16 @@ random-particle recovery, publishing, and TF are provided.
 Students implement the prediction step: move every particle using the change in
 odometry, with motion-scaled Gaussian noise.
 
+## Keep These References Open
+
+- [math helpers, angle wrapping, and 2D rotation](../reference/cpp-algorithm-patterns.md)
+- [ROS-free `.hpp`/`.cpp` core pattern](../reference/cpp-node-patterns.md#ros-free-core-pattern)
+- [odometry fields and timestamps](../reference/messages-and-qos.md#nav_msgsmsgodometry)
+- [package-specific build and source commands](../reference/terminal-commands.md#build-and-source)
+
+Use the formulas and safe-C++ patterns that fit the motion update; do not copy a
+complete reference example into the particle filter.
+
 ## Target File
 
 Fill in:
@@ -91,9 +101,6 @@ particle.x += world_dx
 particle.y += world_dy
 particle.theta = wrapAngle(particle.theta + noisy_dyaw)
 ```
-
-This is the complete learner-owned algorithm. Random-particle injection remains
-provided in `odomCallback(...)`, after this function returns.
 
 ## Build
 

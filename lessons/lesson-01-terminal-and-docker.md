@@ -47,8 +47,9 @@ command, it runs, it prints output.
 - An **environment variable** is a named value the shell carries, like `$HOME` or
   `$ROS_DISTRO`. Print one with `echo $ROS_DISTRO` (→ `humble`).
 - **Sourcing** a script (`source file.bash` or `. file.bash`) runs it *in your
-  current shell* so it can set env vars that stick. That's why
-  `source install/setup.bash` (Lesson 0) works the way it does.
+  current shell* so it can set env vars that stick. Source the base ROS install
+  with `source /opt/ros/humble/setup.bash`, then source packages built in this
+  workspace with `source /workspace/install/setup.bash`.
 
 ### A few ROS-specific terminal commands (and what they mean)
 
@@ -184,7 +185,13 @@ Follow the repo `README.md`. Short version:
    see a desktop.
 
 4. **Open Terminal Emulator inside the TigerVNC desktop.** This is the normal place
-   to run lesson commands, and it should start at `/workspace`.
+   to run lesson commands. Check where you are:
+
+   ```sh
+   pwd
+   ```
+
+   You should see `/workspace`. If you do not, run `cd /workspace`.
 
    If you prefer using your own host terminal, open an equivalent container shell
    with:
@@ -193,17 +200,32 @@ Follow the repo `README.md`. Short version:
    docker compose exec ros2-humble-vnc bash
    ```
 
-5. **Build the workspace** in that VNC terminal or container shell:
+5. **Load ROS 2 Humble** in that terminal. The container normally does this for
+   you, but run the command explicitly while learning what each setup file does:
+
+   ```sh
+   source /opt/ros/humble/setup.bash
+   ros2 --help
+   ```
+
+   If the second command prints ROS help, the base ROS installation is ready.
+
+6. **Build the workspace** in that VNC terminal or container shell. Run each line
+   separately so an error is easy to spot:
 
    ```sh
    colcon build --symlink-install
    source install/setup.bash
+   ros2 pkg list | grep robonav_training_bringup
    ```
+
+   The final command should print `robonav_training_bringup`. The first `source`
+   command loaded ROS itself; this second one adds packages from this workspace.
 
    The Lesson 1 checkpoint is only the robot simulation: Gazebo, RViz, sensors, and
    teleop. The navigation stack is built up in later lessons.
 
-6. **Launch the simulation:**
+7. **Launch the simulation:**
 
    ```sh
    ros2 launch robonav_training_bringup sim.launch.py
@@ -219,12 +241,13 @@ Follow the repo `README.md`. Short version:
    receiving the robot description and transforms. The **Fixed Frame** field at
    the top of Global Options controls which coordinate frame RViz holds still.
 
-7. **Drive it.** Open a *second* Terminal Emulator window inside TigerVNC and get
+8. **Drive it.** Open a *second* Terminal Emulator window inside TigerVNC and get
    into the workspace first. If you are using host terminals instead, start another
    shell with `docker compose exec ros2-humble-vnc bash`.
 
    ```sh
    cd /workspace          # the bind-mounted repo; usually already the default dir
+   source /opt/ros/humble/setup.bash
    source install/setup.bash
    ros2 run teleop_twist_keyboard teleop_twist_keyboard
    ```
@@ -233,7 +256,7 @@ Follow the repo `README.md`. Short version:
    velocity commands. Use the keys it prints to drive, and watch the robot move in
    Gazebo. Every new shell needs its own `source install/setup.bash`.
 
-8. **Stop everything** when done. Run this from a **host terminal at the repo
+9. **Stop everything** when done. Run this from a **host terminal at the repo
    root**, not from the VNC/container terminal (the container cannot shut itself
    down with Docker Compose):
 

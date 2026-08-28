@@ -18,6 +18,8 @@ repository until after attempting the exercise.
 - Once a feature is wired into CMake, run `colcon build --symlink-install` and fix
   compile errors before moving on.
 - Source every new terminal after a build with `source install/setup.bash`.
+- If `ros2` is not found, first run `source /opt/ros/humble/setup.bash`; then
+  source `install/setup.bash` after the workspace has been built.
 - Keep graphical and ROS commands in TigerVNC terminals by default. A host terminal
   using `docker compose exec ros2-humble-vnc bash` is fine too.
 
@@ -52,6 +54,10 @@ optional cleanup.
 Add new files explicitly with `git add path`; `git commit -a` does not include
 untracked files. Keep commits small enough that a teammate can review one idea at
 a time.
+
+Each implementation page points to the reference sheets that match its task.
+Keep those pages open, but do not copy a complete reference example. Adapt only
+the relevant pattern to the application named in the lesson.
 
 ## What Students Build
 

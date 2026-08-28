@@ -5,31 +5,22 @@ custom C++ nodes are launched as composable nodes inside a component container.
 
 ## Standalone Node Launch Pattern
 
-Use this for a normal executable process.
+Use this minimal scaffold for a normal executable process. Add launch arguments
+and parameters later from their separate entries.
 
 ```python
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument
-from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 
 
 def generate_launch_description():
-    use_sim_time = LaunchConfiguration("use_sim_time")
-
     return LaunchDescription(
         [
-            DeclareLaunchArgument("use_sim_time", default_value="true"),
             Node(
                 package="robot_localization",
                 executable="ekf_node",
                 name="ekf_filter_node",
                 output="screen",
-                parameters=[
-                    {
-                        "use_sim_time": use_sim_time,
-                    }
-                ],
             ),
         ]
     )
@@ -41,22 +32,18 @@ Created in Lesson 7:
 
 ## Composable Node Launch Pattern
 
-Use this for C++ components registered with `RCLCPP_COMPONENTS_REGISTER_NODE`.
+Use this minimal scaffold for a C++ component registered with
+`RCLCPP_COMPONENTS_REGISTER_NODE`. Add arguments and parameters only when needed.
 
 ```python
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument
-from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import ComposableNodeContainer
 from launch_ros.descriptions import ComposableNode
 
 
 def generate_launch_description():
-    use_sim_time = LaunchConfiguration("use_sim_time")
-
     return LaunchDescription(
         [
-            DeclareLaunchArgument("use_sim_time", default_value="true"),
             ComposableNodeContainer(
                 name="example_container",
                 namespace="",
@@ -68,12 +55,6 @@ def generate_launch_description():
                         package="example_package",
                         plugin="robonav_training::ExampleNode",
                         name="example_node",
-                        parameters=[
-                            {
-                                "use_sim_time": use_sim_time,
-                                "example_parameter": 1.0,
-                            }
-                        ],
                     ),
                 ],
             ),
@@ -123,6 +104,13 @@ Why use one container:
 - The training code stays close to how larger ROS systems are composed.
 
 ## Launch Arguments
+
+Imports:
+
+```python
+from launch.actions import DeclareLaunchArgument
+from launch.substitutions import LaunchConfiguration
+```
 
 Declare an argument:
 

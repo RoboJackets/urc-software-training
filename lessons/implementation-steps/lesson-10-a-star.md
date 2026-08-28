@@ -8,6 +8,17 @@ The split is intentional: `a_star_search.cpp` is ordinary C++ with no topics or
 callbacks. The wrapper converts ROS data into a `GridMap` and flat blocked mask,
 calls the search, then converts returned cells into `nav_msgs/msg/Path`.
 
+## Keep These References Open
+
+- [priority queues, safe indexing, and path reconstruction](../reference/cpp-algorithm-patterns.md)
+- [ROS-free `.hpp`/`.cpp` core pattern](../reference/cpp-node-patterns.md#ros-free-core-pattern)
+- [`OccupancyGrid` and `Path` fields](../reference/messages-and-qos.md)
+- [parameter and TF-listener patterns](../reference/cpp-node-patterns.md)
+- [package-specific build and source commands](../reference/terminal-commands.md#build-and-source)
+
+Take only the data-structure or ROS pattern needed for each TODO and adapt it to
+the planner's existing types and requirements.
+
 ## Target Files
 
 Fill in:

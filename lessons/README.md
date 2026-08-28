@@ -27,6 +27,12 @@ conditionals, and simple classes—but you do not need prior ROS experience. The
 [first C++ node practice](first-cpp-node.md) translates the C++ syntax ROS uses
 most often before the larger assignments begin.
 
+Before or during the course, brush up on modern C++. In particular, be able to
+recognize references, `const`, templates, and smart pointers such as
+`std::unique_ptr` and `std::shared_ptr`. You do not need to memorize ROS's long
+types; the practice and [C++ reference](reference/cpp-node-patterns.md) show the
+patterns used here.
+
 1. Do the lessons **in order** — each builds on the last.
 2. Keep the repo open beside you. Every lesson has a **"Where this lives in the
    repo"** section pointing at the exact files it explains.
@@ -52,6 +58,10 @@ When you are building or editing code, keep the
 for C++ nodes, `.hpp`/`.cpp` files, publishers, subscribers, QoS, messages,
 launch files, CMake, `package.xml`, parameters, TF, and terminal debugging
 commands used throughout this repo.
+
+Use the reference as a toolbox, not as an answer to copy from top to bottom. Take
+only the pattern that fits the feature you are implementing, then deliberately
+change the class, types, topics, parameters, and member names for your node.
 
 The first-node practice is the small introductory coding assignment. Lessons 5,
 7, and 9–12 have the larger coding track in
@@ -124,6 +134,8 @@ repeated each time:
   **`source install/setup.bash` in every new terminal**, after building once with
   `colcon build --symlink-install`. If `ros2` can't find a package, you forgot to
   source.
+  The container normally sources ROS 2 Humble for you; if `ros2` itself is not
+  found, run `source /opt/ros/humble/setup.bash` first, then source the workspace.
 - **You'll need several terminals at once** — typically one for the simulator, one
   for the navigation stack, and one or more for `ros2 topic echo`/teleop.
 - **Two levels of "running."** Some hands-on steps need only the **simulator**

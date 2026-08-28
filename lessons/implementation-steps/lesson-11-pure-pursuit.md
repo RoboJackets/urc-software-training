@@ -8,6 +8,16 @@ As in Lesson 10, the ROS-free core is separated from its wrapper. The wrapper
 receives `/plan`, looks up the robot pose from TF, calls the core at a fixed rate,
 and publishes the returned linear and angular velocity on `/cmd_vel`.
 
+## Keep These References Open
+
+- [2D transforms, clamping, and safe math](../reference/cpp-algorithm-patterns.md)
+- [publisher, subscriber, parameter, timer, and TF patterns](../reference/cpp-node-patterns.md)
+- [`Path` and `Twist` message fields](../reference/messages-and-qos.md)
+- [package-specific build and source commands](../reference/terminal-commands.md#build-and-source)
+
+Adapt the relevant geometry and node patterns to the provided controller types;
+the reference is not a complete controller solution.
+
 ## Target Files
 
 Fill in:
