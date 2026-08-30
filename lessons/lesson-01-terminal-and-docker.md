@@ -207,15 +207,31 @@ Follow the repo `README.md`. Short version:
    source /opt/ros/humble/setup.bash
    ros2 --help
    ```
-
    If the second command prints ROS help, the base ROS installation is ready.
+
+   Before you continue, you should check that your linux terminal has 'source /opt/ros/humble/setup.bash' inside
+   the '.bashrc' file so you don't have to source it manually everytime you open a terminal. The '.bashrc' file is a hidden file in your home folder that runs everytime you open a new terminal. In the TigerVNC setup, run this command anywhere in your terminal:
+
+   ```sh
+   cat ~/.bashrc
+   ```
+   or (if you want to directly edit the file)
+   ```sh
+   nano ~/.bashrc
+   ```
+   **If you get a 'command not found' error, 'CMake' error, 'ImportError', or any error at all when you try to run ros2, you should always check that 'source /opt/ros/humble/setup.bash' is sourced and also inside your './bashrc' file. You should also check that the 'install/setup.bash' file is sourced in your workspace so ros2 is able to find the compiled packages (you'll encounter this in the next step).**
+
+   Scroll down. You should see 'source /opt/ros/humble/setup.bash' on (or close to) the fourth to last line in the '.bashrc' file. If it's not there or you're setting up ros2 from scratch you should run:
+   ```sh
+   echo 'source /opt/ros/humble/setup.bash' >> ~/.bashrc
+   ```
 
 6. **Build the workspace** in that VNC terminal or container shell. Run each line
    separately so an error is easy to spot:
 
    ```sh
-   colcon build --symlink-install
-   source install/setup.bash
+   colcon build --symlink-install # Compiles the packages into executable(s) that ros2 can run
+   source install/setup.bash # Source the install/setup.bash script everytime you want to run ros2 in your workspace
    ros2 pkg list | grep robonav_training_bringup
    ```
 
@@ -228,7 +244,7 @@ Follow the repo `README.md`. Short version:
 7. **Launch the simulation:**
 
    ```sh
-   ros2 launch robonav_training_bringup sim.launch.py
+   ros2 launch robonav_training_bringup sim.launch.py # This might take a minute
    ```
 
    Gazebo and RViz open on the VNC desktop. You should see the robot in both. RViz
@@ -243,11 +259,12 @@ Follow the repo `README.md`. Short version:
 
 8. **Drive it.** Open a *second* Terminal Emulator window inside TigerVNC and get
    into the workspace first. If you are using host terminals instead, start another
-   shell with `docker compose exec ros2-humble-vnc bash`.
+   shell with `docker compose exec ros2-humble-vnc bash`. Then run the commands below 
+   and look at the Gazebo window.
 
    ```sh
-   cd /workspace          # the bind-mounted repo; usually already the default dir
-   source /opt/ros/humble/setup.bash
+   cd /workspace # The bind-mounted repo; usually already the default dir
+   source /opt/ros/humble/setup.bash # Should happen automatically if you added it to your '~/.bashrc' file
    source install/setup.bash
    ros2 run teleop_twist_keyboard teleop_twist_keyboard
    ```
