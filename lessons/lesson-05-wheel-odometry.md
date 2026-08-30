@@ -175,7 +175,7 @@ Experiments:
 
 ## Video supplement
 
-- **Modern Robotics, Chapter 13.4: Odometry** by Northwestern Robotics
+- [Modern Robotics, Chapter 13.4: Odometry (Northwestern Robotics)](https://www.youtube.com/watch?v=eQ9E0Zvp9jw)
 
 ## Check yourself
 

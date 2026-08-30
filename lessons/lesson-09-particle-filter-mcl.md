@@ -254,7 +254,7 @@ In RViz:
 
 ## Video supplement
 
-- **Particle Filters | Robot Localization** by Bot Field
+- [Particle Filters | Robot Localization (Bot Field)](https://www.youtube.com/watch?v=ydC0mE0ZYSA)
 
 ## Check yourself
 

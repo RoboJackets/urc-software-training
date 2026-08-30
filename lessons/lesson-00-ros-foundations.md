@@ -4,6 +4,8 @@
 > nodes, topics, messages, services, parameters, components, and the build
 > system — that every other lesson depends on.
 
+**Before starting, please note that you should open 'urc-software-training/' in vscode and select "open as preview" in the top right (looks like a document file) to preview the markdown files.**
+
 ## Where this lives in the repo
 
 ROS 2 is the framework the *whole* repo is built on. Concretely, look at:
@@ -61,6 +63,13 @@ that carries one **message type** (e.g. `geometry_msgs/Twist`, a velocity).
 
 - A node that sends data **publishes** to a topic.
 - A node that receives data **subscribes** to a topic.
+
+**Very Important**
+ROS2 has a built-in way to visualize the connections between nodes and topics through a GUI called rqt graph. To pull up this GUI, run the following code in your terminal.
+```sh
+rqt_graph
+```
+In the top left where it says 'nodes only', click to get the dropdown menu and select 'nodes and topics' to see the graph of the nodes and topics together. Keep in mind, your nodes must be actively publishing and subscribing to see anything. Click the refresh button (also in the top left) to update the graph.
 
 This is *anonymous many-to-many*: a publisher doesn't know or care who is
 listening. `pure_pursuit` publishes `/cmd_vel`; it has no idea whether the real
@@ -191,7 +200,8 @@ Starting nodes one by one is tedious. A **launch file** starts many at once with
 the right parameters and remappings. (A **remapping** renames a topic at launch
 time without touching the code — e.g. a node that publishes a generic `/odom` can
 be told to publish `/wheel/odometry` instead, so different nodes line up.) Launch
-files are written in Python and live in each package's `launch/` folder.
+files are written in Python and live in each package's `launch/` folder. **It's also 
+important to note that launch files can started from other launch files.**
 
 After Lesson 5, open `src/wheel_odometry/launch/wheel_odometry.launch.py`. It
 starts the wheel odometry node and passes `use_sim_time`. The big one,
@@ -253,7 +263,7 @@ and Lesson 5.
 
 ## Video supplement
 
-- **10 things you need to know about ROS! | Getting Ready to Build Robots with ROS #4** (Articulated Robotics)
+- [10 things you need to know about ROS! | Getting Ready to Build Robots with ROS #4 (Articulated Robotics)](https://www.youtube.com/watch?v=KAASuA3_4eg)
 
 ## Check yourself
 

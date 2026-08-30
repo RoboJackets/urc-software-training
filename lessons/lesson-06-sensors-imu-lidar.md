@@ -181,8 +181,8 @@ In RViz:
 
 ## Video supplement
 
-- **What is an Inertial Measurement Unit (IMU)?** by Phidgets Inc.
-- **What Is LiDAR and how does LiDAR work?** by Phoenix LiDAR Systems
+- [What is an Inertial Measurement Unit (IMU)? (Phidgets Inc.)](https://www.youtube.com/watch?v=qS9GwaekLW4)  
+- [What Is LiDAR and how does LiDAR work? (Phoenix LiDAR Systems)](https://www.youtube.com/watch?v=dOvMDbQKpwQ)
 
 ## Check yourself
 

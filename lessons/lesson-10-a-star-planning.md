@@ -202,7 +202,7 @@ In RViz:
 
 ## Video supplement
 
-- **https://www.youtube.com/watch?v=i0x5fj4PqP4** by Tarodev
+- [Pathfinding - Understanding A* (Tarodev)](https://www.youtube.com/watch?v=i0x5fj4PqP4)
 
 ## Check yourself
 

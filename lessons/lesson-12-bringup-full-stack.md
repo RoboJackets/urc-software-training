@@ -236,7 +236,7 @@ implementation:
 
 ## Video supplement
 
-- **Articulated Robotics — the full mobile-robot / Nav2 series** (Josh Newans):
+- [Making full robot navigation easy with Nav2 and ROS / Nav2 series** (Articulate Robots)](https://www.youtube.com/watch?v=jkoGkAd0GYk):
   shows an equivalent full stack coming together and being debugged in RViz.
 - Official **Nav2** docs/videos (<https://docs.nav2.org/>) — the production-grade
   version of the simplified stack you just built; now you'll recognize every piece.

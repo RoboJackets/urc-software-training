@@ -205,8 +205,7 @@ when you are ready to code.
 
 ## Video supplement
 
-- **Detailed and Correct Derivation of Kinematics Equations of Differential Drive Mobile Robot**
-  Aleksandar Haber PhD
+- [Detailed and Correct Derivation of Kinematics Equations of Differential Drive Mobile Robot (Aleksandar Haber PhD)](https://www.youtube.com/watch?v=YxuJFQZh94Q)
 
 ## Check yourself
 

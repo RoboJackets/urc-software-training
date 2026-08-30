@@ -222,9 +222,9 @@ At this point the simulator publishes only the rigid body frames
 
 ## Video supplement
 
-- **Articulated Robotics — "Understanding ROS 2 transforms (TF2)** (Articulated Robotics)
-- **3Blue1Brown — "Quaternions" / "Visualizing quaternions"** for deep intuition
-  on why 3D rotation is weird (optional, math-heavy).
+- [ROS 2 Transform System (TF2) (Articulated Robotics)](https://www.youtube.com/watch?v=QyvHhY4Y_Y8)  
+- [Quaternions and 3d rotation, explained interactively (3Blue1Brown)](https://www.youtube.com/watch?v=zjMuIxRvygQ)
+  for deep intuition on why 3D rotation is weird (optional, math-heavy).
 - Official: <https://docs.ros.org/en/humble/Tutorials/Intermediate/Tf2/Tf2-Main.html>
 
 ## Check yourself

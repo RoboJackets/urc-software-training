@@ -274,7 +274,7 @@ Follow the repo `README.md`. Short version:
   (`--symlink-install`), so just relaunch. **Changed C++** → re-run `colcon build`.
 
 ## Video supplement
-- **Docker in 100 Seconds** (Fireship)
+- [Docker in 100 Seconds (Fireship)](https://www.youtube.com/watch?v=Gjnup-PuquQ)
 
 ## Check yourself
 

@@ -194,7 +194,7 @@ In RViz:
 
 ## Video supplement
 
-- **LTC21 Tutorial Pure Pursuit** by Neuromorphic Workshop Telluride
+- [LTC21 Tutorial Pure Pursuit (Neuromorphic Workshop Telluride)](https://www.youtube.com/watch?v=qYR7mmcwT2w)
 
 ## Check yourself
 
