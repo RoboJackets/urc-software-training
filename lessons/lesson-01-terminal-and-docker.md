@@ -40,6 +40,9 @@ command, it runs, it prints output.
 | ↑ / ↓ | scroll through previous commands |
 | `Ctrl-C` | stop the running program |
 
+If you're unfamilliar with linux-based terminal text editors, like nano, you should watch this video. You can edit most of your files in vscode but some linux confix files must be opened on the TigerVNC GUI and you'll need to use a text editor in the terminal. Here's a helpful video for using nano.  
+- [How to use Nano (SavvyNick)](https://www.youtube.com/watch?v=g2PU--TctAM)
+
 ### Paths, env vars, and sourcing
 
 - **Absolute path** starts at root: `/workspace/src`. **Relative path** is from

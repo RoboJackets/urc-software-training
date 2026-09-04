@@ -184,6 +184,7 @@ Before answering, make this lesson hands-on with the running simulator:
 ros2 topic echo /joint_states --once
 ros2 topic echo /cmd_vel --once   # run this before pressing a teleop key
 ```
+**Important:** If you see "A message was lost!!!" printed out at the top, don't panic. This happens sometimes when using 'ros2 topic echo' because it essentially creates a new subscriber which listens to and prints out the topic info. Sometimes while this subsriber is being created a package is sent to it before it's fully connected to the publisher. As you've learned previously, publisher nodes continuously publish data on topics so we're only missing a single piece of data from the stream of data.
 
 Match the wheel joint names in `/joint_states` to the URDF, then compare the wheel
 radius and separation in the URDF with `ros2_control.yaml`.
