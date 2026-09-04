@@ -61,6 +61,10 @@ Install Docker:
 - macOS/Windows: install Docker Desktop.
 - Linux: install Docker Engine with the Docker Compose plugin.
 
+After installing Docker Desktop on an Apple Silicon Mac (M1, M2, M3, M4,
+etc.), open **Settings > General** and enable **Use Rosetta for x86_64/amd64
+emulation on Apple Silicon**.
+
 Install TigerVNC Viewer:
 
 - macOS: `brew install --cask tigervnc-viewer`
@@ -126,6 +130,12 @@ Build the mounted ROS workspace from that container shell:
 source /opt/ros/humble/setup.bash
 colcon build --symlink-install
 source install/setup.bash
+```
+
+If the build runs out of memory, reduce parallel compilation:
+
+```sh
+colcon build --symlink-install --executor sequential
 ```
 
 Now you are ready to follow the lessons!
