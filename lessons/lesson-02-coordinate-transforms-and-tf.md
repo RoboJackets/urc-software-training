@@ -188,7 +188,17 @@ smooth and drift-free.
 
 ```sh
 ros2 run tf2_tools view_frames        # writes a PDF diagram of the whole tree
-ros2 run tf2_ros tf2_echo map base_link   # live transform between two frames
+ros2 run tf2_ros tf2_echo <source-frame> <target-frame>   # live transform between two frames 
+```
+**More detail:**  
+This tf2_echo prints the location/orientation of the base_link relative to the map,
+chaining together the transforms from \<source-frame> down to \<target-frame> 
+(the chain goes: map->odom->base_footprint->base_link).  
+For example, you can use 'map' for the source frame and 'base_link' for the target frame.  
+This wont work just yet though because a few links in the chain are missing. As mentioned
+previously, the particle filter posts map->odom and the ekf posts odom->base_footprint.
+
+```sh
 ros2 topic echo /tf                   # raw dynamic transforms
 ros2 topic echo /tf_static            # fixed transforms (the URDF ones)
 ```
@@ -214,7 +224,12 @@ At this point the simulator publishes only the rigid body frames
 `ros2 launch robonav_training_bringup sim.launch.py`, then:
 
 1. `ros2 run tf2_tools view_frames` — it writes `frames.pdf` in the current folder.
-   Open it; you'll see the `base_footprint → base_link → … → lidar_link` body tree.
+   Open it; you'll see the `base_footprint → base_link → … → lidar_link` body tree.  
+If you need a simple pdf viewer for your vm, run the following command in the shell to install evince
+```
+  sudo apt update
+  sudo apt install evince
+```
 2. `ros2 run tf2_ros tf2_echo base_link lidar_link` — note the transform is constant
    (it's a rigid body, fixed by the URDF).
 3. In RViz, enable the **TF** display and identify `base_footprint`, `base_link`,
