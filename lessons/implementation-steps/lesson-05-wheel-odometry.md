@@ -9,13 +9,15 @@ It contains the incomplete C++ and launch scaffolds used below.
 ## 1. Create The Package
 
 ```sh
-cd /workspace/src
+cd /workspace/src # Double check that you're in the right src directory (the one with a_star_planner, map_server, particle_filter, etc.) before running 'ros pkg create'
 ros2 pkg create wheel_odometry --build-type ament_cmake --dependencies \
   rclcpp rclcpp_components sensor_msgs nav_msgs geometry_msgs tf2 \
   tf2_geometry_msgs robonav_training_common
 cd wheel_odometry
 mkdir -p include/wheel_odometry launch
 ```
+
+It's important to understand that the `urc-software-training/src/` file is where all of the packages go, everything outside of that src file is for the build, install, log, and other setup files. Most—if not all—of what you’ll be doing will be within the `urc-software-training/src/` file.
 
 Create:
 

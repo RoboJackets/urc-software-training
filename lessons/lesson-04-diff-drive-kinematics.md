@@ -27,7 +27,11 @@ It also can't move sideways: it can only drive along the direction it faces and
 turn. A robot whose motion is constrained like this — fewer ways it can instantly
 move than the 3 ways it can be positioned (x, y, heading) — is called
 **non-holonomic**. (A robot that *could* also strafe sideways, like one on
-omni-wheels, would be *holonomic*.) Pure pursuit has to respect this in Lesson 11.
+omni-wheels, would be **holonomic**.) Pure pursuit has to respect this in Lesson 11.
+
+Here's an image of a differential drive robot:
+
+![DiffDriveBot|50](images/DifferentialDriveRobotTwoWheel.png)
 
 The whole behavior is captured by two physical constants from the URDF:
 
@@ -36,7 +40,7 @@ The whole behavior is captured by two physical constants from the URDF:
 
 ## From wheel spin to ground distance
 
-Wheel encoders measure **angular** position in radians. A wheel that turns by Δφ
+Wheel encoders measure **angular** position in radians, 'φ' (phi) represents this angular position in radians for each wheel. A wheel that turns by Δφ
 radians rolls a ground distance of:
 
 ```
@@ -65,6 +69,7 @@ d_center = (d_left + d_right) / 2
 
 It's the average because the body's center is halfway between the wheels.
 
+Similar to 'φ' (phi) from the previous example, 'θ' (theta) represents the angular position of the entire robot from a top-down perspective.
 **Heading change** (how much the robot rotated):
 
 ```
@@ -98,7 +103,7 @@ figure needed — it's just "arc = radius × angle" applied to two concentric ci
 
 Now turn the per-step motion `(d_center, Δθ)` into an updated pose `(x, y, θ)`.
 
-The naive ("first-order") update projects the whole move along the *old* heading:
+The **naive ("first-order") update** projects the whole move along the *old* heading:
 
 ```
 x ← x + d_center · cos θ
@@ -180,7 +185,7 @@ implement the math next lesson.
    the robot now? Redo it with the naive update and compare.
 4. You command `v = 0.3 m/s`, `ω = 0.5 rad/s`. Using inverse kinematics, first give
    the left/right wheel **contact speeds** in m/s (`v ± ωL/2`), then convert each to
-   a wheel **angular speed** in rad/s (divide by `r`).
+   a wheel **angular speed** in rad/s (divide by `r`). Remember r = 0.075 and L = 0.34.
 
 ### Check your calculations
 

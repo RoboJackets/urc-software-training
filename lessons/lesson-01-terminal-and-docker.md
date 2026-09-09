@@ -212,8 +212,8 @@ Follow the repo `README.md`. Short version:
    ```
    If the second command prints ROS help, the base ROS installation is ready.
 
-   Before you continue, you should check that your linux terminal has 'source /opt/ros/humble/setup.bash' inside
-   the '.bashrc' file so you don't have to source it manually everytime you open a terminal. The '.bashrc' file is a hidden file in your home folder that runs everytime you open a new terminal. In the TigerVNC setup, run this command anywhere in your terminal:
+   Before you continue, you should check that your linux terminal has `source /opt/ros/humble/setup.bash` inside
+   the `.bashrc` file so you don't have to source it manually everytime you open a terminal. The `.bashrc` file is a hidden file in your home folder that runs everytime you open a new terminal. In the TigerVNC setup, run this command anywhere in your terminal:
 
    ```sh
    cat ~/.bashrc
@@ -222,11 +222,11 @@ Follow the repo `README.md`. Short version:
    ```sh
    nano ~/.bashrc
    ```
-   **If you get a 'command not found' error, 'CMake' error, 'ImportError', or any error at all when you try to run ros2, you should always check that 'source /opt/ros/humble/setup.bash' is sourced and also inside your './bashrc' file. You should also check that the 'install/setup.bash' file is sourced in your workspace so ros2 is able to find the compiled packages (you'll encounter this in the next step).**
+   **If you get a `command not found` error, `CMake` error, `ImportError`, or any error at all when you try to run ros2, you should always check that `source /opt/ros/humble/setup.bash` is sourced and also inside your `./bashrc` file. You should also check that the `install/setup.bash` file is sourced in your workspace so ros2 is able to find the compiled packages (you'll encounter this in the next step).**
 
-   Scroll down. You should see 'source /opt/ros/humble/setup.bash' on (or close to) the fourth to last line in the '.bashrc' file. If it's not there or you're setting up ros2 from scratch you should run:
+   Scroll down. You should see `source /opt/ros/humble/setup.bash` on (or close to) the fourth to last line in the `.bashrc` file. If it's not there or you're setting up ros2 from scratch you should run:
    ```sh
-   echo 'source /opt/ros/humble/setup.bash' >> ~/.bashrc
+   echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
    ```
 
 6. **Build the workspace** in that VNC terminal or container shell. Run each line
