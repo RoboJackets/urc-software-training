@@ -126,8 +126,19 @@ Run these in separate sourced terminals:
 ```sh
 ros2 launch robonav_training_bringup sim.launch.py
 ros2 launch wheel_odometry wheel_odometry.launch.py
-ros2 topic echo /wheel/odometry
+ros2 topic echo /wheel/odometry # Read the instructions below if the output doesn't fit on your screen
 ros2 run teleop_twist_keyboard teleop_twist_keyboard
+```
+
+**If you only see 0.0 printing out after `ros2 topic echo /wheel/odometry`, don't panic. The `nav_msgs::msg::Odometry` message prints out covariance (in this case as 36 0.0 values) for both the pose and the twist. You don't have to worry about covariance now but if it makes it difficult to view the pose and twist information you can print the pose and twist directly using the commands below.**
+
+```sh
+# Print out just the pose
+ros2 topic echo /wheel/odometry --field pose.pose
+
+# Print out just the twist
+ros2 topic echo /wheel/odometry --field twist.twist
+
 ```
 
 Check only these results:

@@ -166,8 +166,9 @@ ros2 topic echo /clock --once
 
 In RViz:
 
-1. Add a **LaserScan** display on `/lidar/scan`. Set RViz's **Fixed Frame** to
-   `base_link` (`odom` is added in Lesson 7 and `map` in Lesson 9). Drive around
+1. Got to the left side pannel under `Displays`, Add a **LaserScan** display on 
+   `/lidar/scan`. Set RViz's **Fixed Frame** to `base_link` (`odom` is added in 
+   Lesson 7 and `map` in Lesson 9). Drive around!
    and watch the red points trace the walls.
 2. Note how the scan is a forward 180° fan, not a full circle — that matches the
    `−90°…+90°` config from `lidar.xacro`.

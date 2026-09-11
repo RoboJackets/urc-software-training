@@ -238,6 +238,7 @@ Experiments:
 
 ## Video supplement
 
+- [Visually Explained: Kalman Filters (Visually Explained)](https://www.youtube.com/watch?v=IFeCIbljreY)
 - [The Extended Kalman Filter (EKF): Why Taylor Expansions are Awesome (James Han)](https://www.youtube.com/watch?v=9X3jGGnbcvU)
 - `robot_localization` docs: look up the ROS 2 state-estimation node parameters and
   sensor config vectors for the distro used by the container.
