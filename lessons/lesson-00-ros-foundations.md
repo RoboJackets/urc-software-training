@@ -4,7 +4,7 @@
 > nodes, topics, messages, services, parameters, components, and the build
 > system — that every other lesson depends on.
 
-**Before starting, please note that you should open `urc-software-training/` in vscode and select "open as preview" in the top right (looks like a document file) to preview the markdown files.**
+**Before starting, please note that you should open `urc-software-training/` in vscode and right click on this markdown file in the `Explorer` menu (on the left side of the vscode editor). Then select `Open Preview` to display this markdown file properly instead of as a text file. You should do this for every markdown file for the rest of the project. Alternitavely, you can select "open as preview" in the top right (looks like a document file) to preview the markdown files.**
 
 ## Where this lives in the repo
 

@@ -215,11 +215,11 @@ odometry, and the EKF, each in its own sourced TigerVNC terminal or host-termina
 # Terminal 1 — simulator:
 ros2 launch robonav_training_bringup sim.launch.py
 # Terminal 2 — wheel odometry (the EKF's odom input):
-ros2 launch wheel_odometry wheel_odometry.launch.py
+ros2 launch wheel_odometry wheel_odometry.launch.py --field pose.pose.orientation
 # Terminal 3 — the EKF itself:
 ros2 launch ekf_localization ekf_localization.launch.py
 # Terminal 4 — inspect:
-ros2 topic echo /odometry/filtered
+ros2 topic echo /odometry/filtered --field pose.pose.orientation
 ros2 run tf2_ros tf2_echo odom base_footprint   # the EKF's transform
 ```
 

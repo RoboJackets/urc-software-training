@@ -156,14 +156,15 @@ First build the map server and inspect the map files it will load:
 ```sh
 colcon build --packages-up-to map_server
 source install/setup.bash
-less src/map_server/maps/training_map.yaml
+cat src/map_server/maps/training_map.yaml
 ```
 
 There is no automated parser test suite in this training repository. The runtime
 check below verifies that the loader accepts the supplied PGM/YAML pair and
 publishes the expected metadata.
 
-Then launch and inspect in two sourced terminals:
+Then launch and inspect in three sourced terminals:
+
 
 ```sh
 # Terminal 1: the launch file supplies the default map path
@@ -171,19 +172,33 @@ ros2 launch map_server map_server.launch.py
 ```
 
 ```sh
-# Terminal 2
+# Terminal 2: we need map->odom but this implementation happens later in lesson 09, for now use a static transform publisher to connect map->odom
+ros2 run tf2_ros static_transform_publisher \
+  --x 0 --y 0 --z 0 --roll 0 --pitch 0 --yaw 0 \
+  --frame-id map --child-frame-id odom
+```
+
+```sh
+# Terminal 3: pull up the simulation
+ros2 launch robonav_training_bringup sim.launch.py
+```
+
+```sh
+# Terminal 4
 ros2 topic echo --qos-reliability reliable --qos-durability transient_local /map --once
 ros2 topic info /map --verbose   # Durability should be TRANSIENT_LOCAL
 ```
 
 In RViz:
 
-1. Add a **Map** display on `/map`, Fixed Frame `map`. You'll see the occupancy
+1. Set the fixed frame to `map`
+2. Add a **Map** display on `/map`, Fixed Frame `map`.
+3. In **Topic** set the **Durablilty Policy** to `transient_local`.  You'll see the occupancy.
    grid as black (occupied), white/gray (free), and unknown regions.
-2. Read off the `info` from the `ros2 topic echo --qos-reliability reliable
+4. Read off the `info` from the `ros2 topic echo --qos-reliability reliable
    --qos-durability transient_local /map --once` command: confirm `resolution: 0.05` and
    `origin: [-4.5, -4.5, 0]` match the YAML.
-3. (Optional) Open `training_map.yaml`; change `free_thresh`/`occupied_thresh`,
+5. (Optional) Open `training_map.yaml`; change `free_thresh`/`occupied_thresh`,
    then rebuild and relaunch the map server. The YAML is installed with the package,
    so a rebuild is the reliable rule for this map-file edit.
 

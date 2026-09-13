@@ -93,7 +93,7 @@ ros2 launch ekf_localization ekf_localization.launch.py
 Check:
 
 ```sh
-ros2 topic echo /odometry/filtered
+ros2 topic echo /odometry/filtered --field pose.pose.orientation
 ros2 run tf2_ros tf2_echo odom base_footprint
 ```
 
