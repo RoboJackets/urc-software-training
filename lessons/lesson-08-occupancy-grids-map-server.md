@@ -163,7 +163,7 @@ There is no automated parser test suite in this training repository. The runtime
 check below verifies that the loader accepts the supplied PGM/YAML pair and
 publishes the expected metadata.
 
-Then launch and inspect in three sourced terminals:
+Then launch and inspect in four sourced terminals:
 
 
 ```sh
