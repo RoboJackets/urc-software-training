@@ -167,19 +167,24 @@ Then launch and inspect in four sourced terminals:
 
 
 ```sh
-# Terminal 1: the launch file supplies the default map path
+# Terminal 1: The launch file supplies the default map path
 ros2 launch map_server map_server.launch.py
 ```
 
 ```sh
-# Terminal 2: we need map->odom but this implementation happens later in lesson 09, for now use a static transform publisher to connect map->odom
+# Terminal 2: We need map->odom but this implementation happens later in lesson 09, for now use a static transform publisher to connect map->odom
 ros2 run tf2_ros static_transform_publisher \
   --x 0 --y 0 --z 0 --roll 0 --pitch 0 --yaw 0 \
   --frame-id map --child-frame-id odom
 ```
 
 ```sh
-# Terminal 3: pull up the simulation
+# Terminal 3: Publish ekf localization to complete the path from odom->base_footprint
+ros2 launch ekf_localization ekf_localization.launch.py
+```
+
+```sh
+# Terminal 3: Pull up the simulation
 ros2 launch robonav_training_bringup sim.launch.py
 ```
 
@@ -187,12 +192,14 @@ ros2 launch robonav_training_bringup sim.launch.py
 # Terminal 4
 ros2 topic echo --qos-reliability reliable --qos-durability transient_local /map --once
 ros2 topic info /map --verbose   # Durability should be TRANSIENT_LOCAL
+ros2 run tf2_tools view_frames # Go to your files and look at the pdf that was just created, you should see
+                               # the full TF tree (from lesson 02), if you don't something's wrong
 ```
 
 In RViz:
 
 1. Set the fixed frame to `map`
-2. Add a **Map** display on `/map`, Fixed Frame `map`.
+2. Add a **Map** display on `/map`, Fixed Frame `map`. This makes the camera in RViz follow the map tf.
 3. In **Topic** set the **Durablilty Policy** to `transient_local`.  You'll see the occupancy.
    grid as black (occupied), white/gray (free), and unknown regions.
 4. Read off the `info` from the `ros2 topic echo --qos-reliability reliable
