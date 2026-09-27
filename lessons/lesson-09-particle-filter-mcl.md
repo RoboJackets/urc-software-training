@@ -68,7 +68,7 @@ different representation:
 
 When the map arrives, the filter finds all **free cells** (occupancy < 50) and
 scatters particles uniformly across them, each with a random heading and equal
-weight `1/N`. Starting only on free cells means no particle begins inside a wall.
+weight `1/N`. Remember the .pgm file we looked at in the previous lesson? The pixels in this file **are** the grid cells, dark pixels are occupied and light pixels are unoccupied. Look at `src/map_server/maps/training_map.yaml` again, this shows the occupancy score for a grid cell (above 0.65 the cell is **100—occupied**, below 0.25 the cell is **0—free**, and between them the cell value is **-1—unknown**). Starting only on free cells means no particle begins inside a wall.
 (If you know the start pose, you'd instead cluster particles around it; this repo
 defaults to spreading them.)
 
@@ -229,11 +229,27 @@ Start the simulator, wheel odometry, and EKF exactly as in Lesson 7. Also start 
 map server from Lesson 8. Then add the particle filter in a new sourced terminal:
 
 ```sh
+ros2 launch map_server map_server.launch.py
+```
+
+```sh
+ros2 launch ekf_localization ekf_localization.launch.py
+```
+
+```sh
 ros2 launch particle_filter particle_filter.launch.py
+```
+
+```sh
+ros2 launch robonav_training_bringup sim.launch.py
 ```
 
 This is the localization stack you have built so far. In another terminal, drive
 with teleop and inspect:
+
+```sh
+ros2 run teleop_twist_keyboard teleop_twist_keyboard
+```
 
 ```sh
 ros2 topic echo /amcl_pose --once

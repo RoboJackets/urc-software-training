@@ -23,21 +23,18 @@ and the three noise parameters.
 
 ## Implement The Function
 
-1. Calculate the noise standard deviations once:
+1. For the first TODO, calculate the noise standard deviations once. 
+- We want to calculate sigma_x, sigma_y and sigma_theta at this step. 
+- Each sigma is a standard deviation, it controls the spread of random values.
+- The standard deviation depends on how uncertain (or noisy) a movement is, and the maginutude of the movement.
+- Think about how you can calculate these values given the parameters for the applyMotionUpdate member function.
 
-   ```text
-   sigma_x = x_noise_ * translation
-   sigma_y = y_noise_ * translation
-   sigma_theta = theta_noise_ * rotation
-   ```
-
-2. Loop through `particles_`. For each particle, create separate noisy values:
-
-   ```text
-   noisy_dx = dx_body + gaussianNoise(sigma_x)
-   noisy_dy = dy_body + gaussianNoise(sigma_y)
-   noisy_dyaw = dyaw + gaussianNoise(sigma_theta)
-   ```
+2. For the second TODO, loop through `particles_`. For each particle, create separate noisy values:
+- We want to calculate noisy_dx, noisy_dy, and noisy_dyaw at this step.
+- We're given the robot's odometry changes (dx_body, dy_body, dyaw)
+- We’ve also calculated the three sigma values, which control the spread of the random errors we’ll generate.
+- We use gaussianNoise(...) along with the corresponding sigma value to generate the random error for each movement component of each particle.
+- These noisy delta values depend on the current odom values of the robot, and gaussianNoise(...).
 
 3. Rotate the noisy translation by that particle's `theta` using the reference
    lines, then add it to `particle.x` and `particle.y`.

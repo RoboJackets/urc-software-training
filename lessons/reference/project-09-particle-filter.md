@@ -4,6 +4,7 @@ Use this incomplete function with the Project 9 instructions.
 
 ## Motion-Update Scaffold
 
+### Copy and paste this where it says TODO(Lesson 9) in pf_motion_update.cpp, then go back to the implementation steps file.
 ```cpp
 void ParticleFilter::applyMotionUpdate(
   double dx_body, double dy_body, double dyaw,
