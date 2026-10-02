@@ -27,19 +27,27 @@ and the three noise parameters.
 - We want to calculate sigma_x, sigma_y and sigma_theta at this step. 
 - Each sigma is a standard deviation, it controls the spread of random values.
 - The standard deviation depends on how uncertain (or noisy) a movement is, and the maginutude of the movement.
-- Think about how you can calculate these values given the parameters for the applyMotionUpdate member function.
+- Think about how you can calculate these three values given the parameters for the applyMotionUpdate member function.
 
 2. For the second TODO, loop through `particles_`. For each particle, create separate noisy values:
 - We want to calculate noisy_dx, noisy_dy, and noisy_dyaw at this step.
-- We're given the robot's odometry changes (dx_body, dy_body, dyaw)
+- We're given the robot's odometry changes (dx_body, dy_body, dyaw).
 - We’ve also calculated the three sigma values, which control the spread of the random errors we’ll generate.
 - We use gaussianNoise(...) along with the corresponding sigma value to generate the random error for each movement component of each particle.
 - These noisy delta values depend on the current odom values of the robot, and gaussianNoise(...).
+- Think about how you can calculate these three values given this information.
 
-3. Rotate the noisy translation by that particle's `theta` using the reference
+3. For the third TODO, while still looping through `particles_`, update the current particle's x, y, and theta values.
+- We want to update the particle's x, y, and theta values in the map frame.
+- In the previous lines of code look at the noisy_dx and noisy_dy values we computed, as well as the world_dx and world_dy values we are given. Which pair of values should we use to increment the particle's x and y values?
+- Updating the theta value is slightly more straightforward, but remember that we need to preserve direction while removing extra revolutions. You can use the wrapAngle() function defined in `pf_random_helpers.cpp`.
+- Think about how you calculate these three values given this information.
+- It might be useful to know high-level what atan2() does. This trig function shows up a lot in robotics!
+
+4. Rotate the noisy translation by that particle's `theta` using the reference
    lines, then add it to `particle.x` and `particle.y`.
 
-4. Update `particle.theta` and wrap it with `wrapAngle(...)`.
+5. Update `particle.theta` and wrap it with `wrapAngle(...)`.
 
 Do not change particle weights in this function.
 
