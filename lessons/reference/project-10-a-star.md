@@ -49,7 +49,7 @@ while (!open.empty()) {
     // TODO: reconstruct and return the path
   }
 
-  for (int neighbor = 0; neighbor < 8; ++neighbor) {
+  for (int neighbor = 0; neighbor < 9; ++neighbor) {
     // TODO: coordinates, validity checks, move cost, and relaxation
   }
 }
