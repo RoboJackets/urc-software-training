@@ -202,10 +202,11 @@ In RViz:
 2. Add a **Map** display on `/map`, Fixed Frame `map`. This makes the camera in RViz follow the map tf.
 3. In **Topic** set the **Durablilty Policy** to `transient_local`.  You'll see the occupancy.
    grid as black (occupied), white/gray (free), and unknown regions.
-4. Read off the `info` from the `ros2 topic echo --qos-reliability reliable
+4. **After adding a Map display and setting Durability Policy to transient_local, you want to save this config so rviz automatiaclly loads with these settings enabled. Go to the top left and select `file`, then select `save config`. This saves the config for the rviz file used by sim.launch.py.**
+5. Read off the `info` from the `ros2 topic echo --qos-reliability reliable
    --qos-durability transient_local /map --once` command: confirm `resolution: 0.05` and
    `origin: [-4.5, -4.5, 0]` match the YAML.
-5. (Optional) Open `training_map.yaml`; change `free_thresh`/`occupied_thresh`,
+6. (Optional) Open `training_map.yaml`; change `free_thresh`/`occupied_thresh`,
    then rebuild and relaunch the map server. The YAML is installed with the package,
    so a rebuild is the reliable rule for this map-file edit.
 
